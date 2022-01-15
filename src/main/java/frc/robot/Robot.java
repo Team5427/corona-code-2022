@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.auto.AethiaLeftThreeCells;
+import frc.robot.commands.auto.shooterPID;
 import frc.robot.subsystems.DriveTrain;
 
 
@@ -103,6 +104,8 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
+    RobotContainer.getShooter().getShooterMotorTop().set(shooterPID.getShooterPID().calculate(RobotContainer.getShooter().getTopEnc().getDistance()));
+
   }
 
   @Override

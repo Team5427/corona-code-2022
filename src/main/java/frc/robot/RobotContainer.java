@@ -7,21 +7,23 @@
 
 package frc.robot;
 
+
+import edu.wpi.first.cscore.UsbCamera;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveIntake;
@@ -75,18 +77,18 @@ public class RobotContainer
   public static Button shootAll;
 
   //motors 
-  private final SpeedController frontLeft, rearLeft;
-  private final SpeedController frontRight,rearRight;
-  private static SpeedControllerGroup leftDrive;
-  private static SpeedControllerGroup rightDrive;
-  private static SpeedController transportMotor;
-  private static SpeedController intakeMotor;
-  private static SpeedController shooterMotorTop;
-  private static SpeedController shooterMotorBottom;
-  private static SpeedController pulleyMotor;
-  private static SpeedController tiltMotor;
-  private static SpeedController elevatorLeft, elevatorRight;
-  private static SpeedController throttleMotor;
+  private final MotorController frontLeft, rearLeft;
+  private final MotorController frontRight,rearRight;
+  private static MotorControllerGroup leftDrive;
+  private static MotorControllerGroup rightDrive;
+  private static MotorController transportMotor;
+  private static MotorController intakeMotor;
+  private static MotorController shooterMotorTop;
+  private static MotorController shooterMotorBottom;
+  private static MotorController pulleyMotor;
+  private static MotorController tiltMotor;
+  private static MotorController elevatorLeft, elevatorRight;
+  private static MotorController throttleMotor;
 
   //sensors
   private static AnalogInput pulleyProximity;
@@ -129,10 +131,10 @@ public class RobotContainer
 
     frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
     rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
-    leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
+    leftDrive = new MotorControllerGroup(frontLeft, rearLeft);
     frontRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
     rearRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
-    rightDrive = new SpeedControllerGroup(frontRight, rearRight);
+    rightDrive = new MotorControllerGroup(frontRight, rearRight);
     drive = new DifferentialDrive(leftDrive, rightDrive);
     drive.setSafetyEnabled(false);
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
@@ -227,8 +229,8 @@ public class RobotContainer
   }
 
   public static DriveTrain getDriveTrain(){return driveTrain;}
-  public static SpeedControllerGroup getLeftSCG(){return leftDrive;}
-  public static SpeedControllerGroup getRightSCG(){return rightDrive;}
+  public static MotorControllerGroup getLeftSCG(){return leftDrive;}
+  public static MotorControllerGroup getRightSCG(){return rightDrive;}
   public static DifferentialDrive getDiffDrive(){return drive;}
   public static AHRS getAHRS(){return ahrs;}
   public static Joystick getJoy(){return joy;}

@@ -12,6 +12,10 @@ import edu.wpi.first.cscore.UsbCamera;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -37,6 +41,7 @@ import frc.robot.commands.auto.AethiaLeftThreeCells;
 import frc.robot.commands.auto.AethiaRightSixCells;
 import frc.robot.commands.auto.AethiaRightThreeCells;
 import frc.robot.commands.auto.PointTurn;
+import frc.robot.commands.auto.newPID;
 import frc.robot.commands.ShootAll;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
@@ -89,6 +94,7 @@ public class RobotContainer
   private static MotorController tiltMotor;
   private static MotorController elevatorLeft, elevatorRight;
   private static MotorController throttleMotor;
+  private static CANSparkMax m_motor;
 
   //sensors
   private static AnalogInput pulleyProximity;
@@ -97,6 +103,7 @@ public class RobotContainer
   private static Encoder shooterTopEnc;
   private static Encoder shooterBottomEnc;
   private static Encoder elevatorLeftEnc, elevatorRightEnc;
+  
   private static DigitalInput tiltSwitch;
   private static DigitalInput limitSwitchLeft;
   private static DigitalInput limitSwitchRight;
@@ -113,6 +120,8 @@ public class RobotContainer
   private static Tilt tilt;
   private static Elevator elevator;
   private static Throttle throttle;
+  private static newPID pid;
+  
 
   //camera
   public static CameraServer server;
@@ -163,6 +172,7 @@ public class RobotContainer
     shooterMotorTop = new WPI_VictorSPX(Constants.SHOOTER_MOTOR_TOP);
     shooterMotorBottom = new WPI_VictorSPX(Constants.SHOOTER_MOTOR_BOTTOM);
     shooter = new Shooter(shooterMotorTop, shooterMotorBottom, shooterTopEnc, shooterBottomEnc);
+    m_motor = new CANSparkMax(Constants.PID_MOTOR, MotorType.kBrushless);
 
     elevatorLeft = new WPI_VictorSPX(Constants.ELEVATOR_LEFT_MOTOR);
     elevatorRight = new WPI_VictorSPX(Constants.ELEVATOR_RIGHT_MOTOR);
@@ -179,6 +189,7 @@ public class RobotContainer
     Ultrasonic.setAutomaticMode(true);
 
     ahrs = new AHRS(SPI.Port.kMXP);
+    pid = new  newPID(Constants.kP, Constants.kI, Constants.kD);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -242,4 +253,7 @@ public class RobotContainer
   public static Ultrasonic getUltrasonic(){return ultra;}
   public static Elevator getElevator(){return elevator;}
   public Command getTurn(){ return new PointTurn(90);}
+  public static CANSparkMax getCanSparkMax() {
+        return m_motor;
+  }
 }

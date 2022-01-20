@@ -14,19 +14,28 @@ import frc.robot.RobotContainer;
 public class shooterPID extends PIDCommand {
     private double time;
     private double commandTime;
-    private   Encoder shooterEncoder;
+    
     
     
 
     public shooterPID(double time) {
+        
         
       super(
         Constants.kP, Constants.kI, Constants.kD
 
 
       );
+
+      
         
         //TODO Auto-generated constructor stub
+    }
+
+    public static PIDController getShooterPID()
+    {
+        PIDController shooterPID = new PIDController(Constants.kP, Constants.kI, Constants.kD);
+        return shooterPID;
     }
 
     @Override

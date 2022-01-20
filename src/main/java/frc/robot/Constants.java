@@ -73,6 +73,7 @@ public final class Constants
     public static final int ELEVATOR_LEFT_MOTOR = 13;
     public static final int ELEVATOR_RIGHT_MOTOR = 2;
     public static final int CLIMB_MANIPULATOR = 4;
+    public static final int PID_MOTOR = 2;
 
     /*******************Sensors*******************/
     public static final int TRANSPORT_PROXIMITY_ONE_SENSOR_PORT = 0;
@@ -92,4 +93,10 @@ public final class Constants
     public static final int SHOOTER_TOP_ENC_PORT_2 = 5;
     public static final int SHOOTER_BOTTOM_ENC_PORT_1 = 2;
     public static final int SHOOTER_BOTTOM_ENC_PORT_2 = 3;
+
+    public static final double setPoint = 0;
+    public static final double processVariable = 0;
+    public static final double kP = 0.00015;
+    public static final double kI = 0.0000012;
+    public static final double kD = 0.0;
 }

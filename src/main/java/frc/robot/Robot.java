@@ -65,6 +65,7 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Right", RobotContainer.getElevator().getRightEnc().getDistance());
     SmartDashboard.putNumber("Shooter Top Enc Rate", RobotContainer.getShooter().getTopEnc().getRate()*(60.0/1024.0));
     SmartDashboard.putNumber("Shooter Bottom Enc Rate", RobotContainer.getShooter().getBottomEnc().getRate()*(60.0/1024.0));
+    SmartDashboard.putNumber("Shooter Top Enc Distance", RobotContainer.getShooter().getTopEnc().getDistance());
   }
 
   /**
@@ -104,7 +105,7 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
-    RobotContainer.getShooter().getShooterMotorTop().set(shooterPID.getShooterPID().calculate(RobotContainer.getShooter().getTopEnc().getDistance()));
+    
 
   }
 

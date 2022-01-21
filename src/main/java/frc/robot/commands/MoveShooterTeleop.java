@@ -28,7 +28,10 @@ public class MoveShooterTeleop extends CommandBase
     @Override
     public void execute() {
 
-        setPointFinal = setPointFinal + (RobotContainer.getJoy().getY() * 12);
+        if (RobotContainer.getShooter().getTopEnc().getVelocity() == 0) {
+            setPointFinal = RobotContainer.getJoy().getAxisType(3) * 3600;
+        }
+        
 
         if (RobotContainer.getShooter().getTopEnc().getVelocity() <= setPointFinal && RobotContainer.getJoy().getRawButton(1) && lsetPoint < setPointFinal) {
             lsetPoint = lsetPoint + setPointFinal/75;
@@ -44,7 +47,7 @@ public class MoveShooterTeleop extends CommandBase
         } else if (!RobotContainer.getJoy().getRawButton(1)) {
             rsetPoint = 0;
         }
-
+        
         RobotContainer.getShooter().moveShooter(lsetPoint, rsetPoint);
     }
 

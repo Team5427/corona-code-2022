@@ -52,13 +52,7 @@ public class Robot extends TimedRobot
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    RobotContainer.getShooter().shooterInitTop();
-    RobotContainer.getShooter().shooterInitBtm();
-    SmartDashboard.putNumber("Shooter Top Enc RPM", RobotContainer.getShooter().getTopEnc().getVelocity());
-    SmartDashboard.putNumber("Shooter Bottom Enc RPM", RobotContainer.getShooter().getBottomEnc().getVelocity());
-    SmartDashboard.putNumber("Final_Setpoint", MoveShooterTeleop.setPointFinal);
-    SmartDashboard.putNumber("Current_Setpoint_Top", MoveShooterTeleop. lsetPoint);
-    SmartDashboard.putNumber("Current_Setpoint_Btm", MoveShooterTeleop. rsetPoint);
+
 
   }
 
@@ -116,7 +110,11 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic() 
   {
-    
+      SmartDashboard.putNumber("Shooter Top Enc RPM", RobotContainer.getShooter().getTopEnc().getVelocity());
+      SmartDashboard.putNumber("Shooter Bottom Enc RPM", RobotContainer.getShooter().getBottomEnc().getVelocity());
+      SmartDashboard.putNumber("Final_Setpoint", MoveShooterTeleop.setPointFinal);
+      SmartDashboard.putNumber("Current_Setpoint_Top", MoveShooterTeleop. lsetPoint);
+      SmartDashboard.putNumber("Current_Setpoint_Btm", MoveShooterTeleop. rsetPoint);
   }
 
   @Override

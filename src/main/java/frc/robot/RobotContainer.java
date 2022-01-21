@@ -65,21 +65,26 @@ public class RobotContainer
   public RobotContainer() 
   {
 
-    pidcontrol_shooter_top = getShooter().getShooterMotorTop().getPIDController();
-    pidcontrol_shooter_btm = getShooter().getShooterMotorBottom().getPIDController();
+    shooterMotorTop = new CANSparkMax(Constants.SHOOTER_MOTOR_TOP, MotorType.kBrushless);
+    shooterMotorBottom = new CANSparkMax(Constants.SHOOTER_MOTOR_BOTTOM, MotorType.kBrushless);
 
-
-
+    pidcontrol_shooter_top = shooterMotorTop.getPIDController();
+    pidcontrol_shooter_btm = shooterMotorBottom.getPIDController();
+    // Configure the button bindings
 
     shooterTopEnc = shooterMotorTop.getEncoder();
     shooterBottomEnc = shooterMotorBottom.getEncoder();
-    shooterMotorTop = new CANSparkMax(Constants.SHOOTER_MOTOR_TOP, MotorType.kBrushless);
-    shooterMotorBottom = new CANSparkMax(Constants.SHOOTER_MOTOR_BOTTOM, MotorType.kBrushless);
-    shooterMotorBottom.setInverted(true);
-    shooter = new Shooter(shooterMotorTop, shooterMotorBottom, shooterTopEnc, shooterBottomEnc, pidcontrol_shooter_top, pidcontrol_shooter_btm);
-    shooter.setDefaultCommand(new MoveShooterTeleop(Constants.SHOOTER_TELEOP_SPEED));
 
-    // Configure the button bindings
+
+
+
+    shooterMotorBottom.setInverted(true);
+    shooterMotorTop.setInverted(true);
+    shooter = new Shooter(shooterMotorTop, shooterMotorBottom, shooterTopEnc, shooterBottomEnc, pidcontrol_shooter_top, pidcontrol_shooter_btm);
+    //shooter.setDefaultCommand(new MoveShooterTeleop(Constants.SHOOTER_TELEOP_SPEED));
+
+
+
     configureButtonBindings();
   }
 

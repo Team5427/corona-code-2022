@@ -23,6 +23,6 @@ public final class Constants
 
     public static final double SHOOTER_TELEOP_SPEED = 1.0;
 
-    public static final int SHOOTER_MOTOR_TOP = 9;
-    public static final int SHOOTER_MOTOR_BOTTOM = 6;
+    public static final int SHOOTER_MOTOR_TOP = 2;
+    public static final int SHOOTER_MOTOR_BOTTOM = 3;
 }

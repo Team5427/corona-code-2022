@@ -7,24 +7,24 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+
 import frc.robot.commands.MoveShooterTeleop;
 import frc.robot.commands.auto.AethiaCenterThreeCells;
 import frc.robot.subsystems.Shooter;
 
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -43,8 +43,8 @@ public class RobotContainer
   private static Button shooterTeleop;
 
   //motors 
-  private static CANSparkMax shooterMotorTop;
-  private static CANSparkMax shooterMotorBottom;
+  public static CANSparkMax shooterMotorTop;
+  public static CANSparkMax shooterMotorBottom;
 
   //sensors
   private static RelativeEncoder shooterTopEnc;
@@ -55,6 +55,8 @@ public class RobotContainer
 
   private static SparkMaxPIDController pidcontrol_shooter_top;
   private static SparkMaxPIDController pidcontrol_shooter_btm;
+
+  public static PowerDistribution pdp;
 
   //camera
   
@@ -75,11 +77,16 @@ public class RobotContainer
     shooterTopEnc = shooterMotorTop.getEncoder();
     shooterBottomEnc = shooterMotorBottom.getEncoder();
 
+    pdp = new PowerDistribution(0, ModuleType.kCTRE);
 
 
+    
 
-    shooterMotorBottom.setInverted(true);
+    shooterMotorBottom.setInverted(false);
+
+    
     shooterMotorTop.setInverted(true);
+
     shooter = new Shooter(shooterMotorTop, shooterMotorBottom, shooterTopEnc, shooterBottomEnc, pidcontrol_shooter_top, pidcontrol_shooter_btm);
     //shooter.setDefaultCommand(new MoveShooterTeleop(Constants.SHOOTER_TELEOP_SPEED));
 

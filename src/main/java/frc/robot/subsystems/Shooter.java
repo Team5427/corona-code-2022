@@ -98,6 +98,11 @@ public class Shooter extends SubsystemBase
         pid_btm_ss.setReference(bsetpoint, CANSparkMax.ControlType.kVelocity);
     }
 
+    public void movePercent(double speed){
+        shooterMotorTop.set(speed);
+        shooterMotorBottom.set(speed);
+    }
+
     public void stop()
     {
         shooterMotorBottom.set(0);

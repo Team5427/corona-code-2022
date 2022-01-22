@@ -7,6 +7,7 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -34,7 +35,9 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit() 
   {
+    
     m_robotContainer = new RobotContainer();
+    
   }
 
   /**
@@ -51,6 +54,13 @@ public class Robot extends TimedRobot
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+
+    SmartDashboard.putBoolean("left", RobotContainer.getShooter().getBottomEnc().getVelocity());
+    SmartDashboard.putBoolean("right", RobotContainer.shooterMotorTop.getInverted());
+    SmartDashboard.putNumber("Voltage?", 1/RobotContainer.shooterMotorTop.getBusVoltage());
+
+    SmartDashboard.putNumber("Power?", RobotContainer.pdp.getCurrent(12));
+
     CommandScheduler.getInstance().run();
 
 
@@ -98,6 +108,10 @@ public class Robot extends TimedRobot
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    // RobotContainer.shooterMotorBottom.setInverted(false);
+
+    
+    // RobotContainer.shooterMotorTop.setInverted(true);
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

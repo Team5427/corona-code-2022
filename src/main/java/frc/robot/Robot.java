@@ -55,10 +55,11 @@ public class Robot extends TimedRobot
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
 
-    SmartDashboard.putBoolean("left", RobotContainer.getShooter().getBottomEnc().getVelocity());
-    SmartDashboard.putBoolean("right", RobotContainer.shooterMotorTop.getInverted());
+    SmartDashboard.putNumber("left RPM", RobotContainer.getShooter().getBottomEnc().getVelocity());
+    SmartDashboard.putNumber("right RPM", RobotContainer.getShooter().getTopEnc().getVelocity());
     SmartDashboard.putNumber("Voltage?", 1/RobotContainer.shooterMotorTop.getBusVoltage());
-
+    SmartDashboard.putNumber("Change RPM", 4560);
+    System.out.println(SmartDashboard.getNumber("Change RPM", 4560));
     SmartDashboard.putNumber("Power?", RobotContainer.pdp.getCurrent(12));
 
     CommandScheduler.getInstance().run();

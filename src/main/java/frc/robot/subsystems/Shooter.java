@@ -18,9 +18,9 @@ public class Shooter extends SubsystemBase
     private RelativeEncoder shooterBottomEnc;
 
     private SparkMaxPIDController pid_top_ss;
-    private SparkMaxPIDController pid_btm_ss;
+    // private SparkMaxPIDController pid_btm_ss;
     public double kP_Top, kI_Top, kD_Top, kIz_Top, kFF_Top, kMaxOutput_Top, kMinOutput_Top, maxRPM_Top;
-    public double kP_Btm, kI_Btm, kD_Btm, kIz_Btm, kFF_Btm, kMaxOutput_Btm, kMinOutput_Btm, maxRPM_Btm;
+    // public double kP_Btm, kI_Btm, kD_Btm, kIz_Btm, kFF_Btm, kMaxOutput_Btm, kMinOutput_Btm, maxRPM_Btm;
 
   
     
@@ -31,7 +31,7 @@ public class Shooter extends SubsystemBase
         shooterTopEnc = top;
         shooterBottomEnc = bottom;
         pid_top_ss = pid_top;
-        pid_btm_ss = pid_btm;
+        //pid_btm_ss = pid_btm;
     }
 
     public CANSparkMax getShooterMotorTop()
@@ -74,28 +74,28 @@ public class Shooter extends SubsystemBase
 
     public void shooterInitBtm() {
             // PID coefficients
-    kP_Btm = 0.00015; 
-    kI_Btm = 0.0000012;
-    kD_Btm = 0; 
-    kIz_Btm = 0; 
-    kFF_Btm = 0.000015; 
-    kMaxOutput_Btm = 1; 
-    kMinOutput_Btm = -1;
-    maxRPM_Btm = 5700;
+    // kP_Btm = 0.00015; 
+    // kI_Btm = 0.0000012;
+    // kD_Btm = 0; 
+    // kIz_Btm = 0; 
+    // kFF_Btm = 0.000015; 
+    // kMaxOutput_Btm = 1; 
+    // kMinOutput_Btm = -1;
+    // maxRPM_Btm = 5700;
 
-    // set PID coefficients
-    pid_btm_ss.setP(kP_Btm);
-    pid_btm_ss.setI(kI_Btm);
-    pid_btm_ss.setD(kD_Btm);
-    pid_btm_ss.setIZone(kIz_Btm);
-    pid_btm_ss.setFF(kFF_Btm);
-    pid_btm_ss.setOutputRange(kMinOutput_Btm, kMaxOutput_Btm);
+    // // set PID coefficients
+    // pid_btm_ss.setP(kP_Btm);
+    // pid_btm_ss.setI(kI_Btm);
+    // pid_btm_ss.setD(kD_Btm);
+    // pid_btm_ss.setIZone(kIz_Btm);
+    // pid_btm_ss.setFF(kFF_Btm);
+    // pid_btm_ss.setOutputRange(kMinOutput_Btm, kMaxOutput_Btm);
     } 
 
     public void moveShooter(double tsetpoint, double bsetpoint)
     {
         pid_top_ss.setReference(tsetpoint, CANSparkMax.ControlType.kVelocity);
-        pid_btm_ss.setReference(bsetpoint, CANSparkMax.ControlType.kVelocity);
+        shooterMotorBottom.set(shooterMotorTop.get());
     }
 
     public void movePercent(double speed){

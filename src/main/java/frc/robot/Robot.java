@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,6 +25,19 @@ import frc.robot.subsystems.DriveTrain;
 public class Robot extends TimedRobot 
 {
   private Command m_autonomousCommand;
+  
+  NetworkTable table;
+
+  
+  public static double pitch;
+  public static double yaw;
+  public static double skew;
+  public static double area;
+  public static double PixelX;
+  public static double PixelY;
+  public static boolean hasTarget;
+  double default_all = 0.0;
+
 
   private RobotContainer m_robotContainer;
   
@@ -37,6 +52,12 @@ public class Robot extends TimedRobot
     RobotContainer.getAHRS().reset();
     DriveTrain.leftSpeed = 0;
     DriveTrain.rightSpeed = 0;
+    
+    NetworkTableInstance PIInstance = NetworkTableInstance.create();
+    PIInstance.setServer("photonvision");
+    PIInstance.startClient();
+    table = PIInstance.getTable("photonvision").getSubTable("photoncam");
+
   }
 
   /**
@@ -54,6 +75,14 @@ public class Robot extends TimedRobot
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    hasTarget = table.getEntry("hasTarget").getBoolean(true);
+    pitch = table.getEntry("targetPitch").getDouble(default_all);
+    yaw = table.getEntry("targetYaw").getDouble(default_all);
+    skew = table.getEntry("targetSkew").getDouble(default_all);
+    area = table.getEntry("targetArea").getDouble(default_all);
+    PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
+    PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
 
     SmartDashboard.putBoolean("Intake Covered", RobotContainer.getTransport().getIntakeCovered());
     SmartDashboard.putBoolean("Transport covered", RobotContainer.getTransport().getTransportCovered());

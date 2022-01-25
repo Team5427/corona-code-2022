@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
@@ -16,6 +17,8 @@ public class Shooter extends SubsystemBase
     private CANSparkMax shooterMotorBottom;
     private RelativeEncoder shooterTopEnc;
     private RelativeEncoder shooterBottomEnc;
+
+    public double setPoint = 4600;
 
     private SparkMaxPIDController pid_top_ss;
     // private SparkMaxPIDController pid_btm_ss;
@@ -54,8 +57,8 @@ public class Shooter extends SubsystemBase
 
     public void shooterInitTop() {
             // PID coefficients
-    kP_Top = 0.00015; 
-    kI_Top = 0.0000012;
+    kP_Top = 0.00025; 
+    kI_Top = 0.0000007;
     kD_Top = 0; 
     kIz_Top = 0; 
     kFF_Top = 0.000015; 
@@ -94,7 +97,14 @@ public class Shooter extends SubsystemBase
 
     public void moveShooter(double tsetpoint, double bsetpoint)
     {
+        SmartDashboard.putNumber("SetPoint", tsetpoint);
         pid_top_ss.setReference(tsetpoint, CANSparkMax.ControlType.kVelocity);
+        shooterMotorBottom.set(shooterMotorTop.get());
+    }
+
+    public void moveShooter(){
+        SmartDashboard.putNumber("SetPoint", setPoint);
+        pid_top_ss.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
         shooterMotorBottom.set(shooterMotorTop.get());
     }
 
@@ -108,4 +118,10 @@ public class Shooter extends SubsystemBase
         shooterMotorBottom.set(0);
         shooterMotorTop.set(0);
     }
+
+    public void addToSetPoint(double val){
+        setPoint += val;
+        SmartDashboard.putNumber("SetPoint", setPoint);
+    }
+    
 }

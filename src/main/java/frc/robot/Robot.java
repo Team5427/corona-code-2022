@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.IncreaseRPM;
 //import frc.robot.commands.auto.AethiaLeftThreeCells;
 //import frc.robot.subsystems.DriveTrain;
 import frc.robot.commands.MoveShooterTeleop;
+import frc.robot.commands.DecreaseRPM;
 
 
 /**
@@ -35,7 +37,8 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit() 
   {
-    
+    SmartDashboard.putNumber("Change RPM", 4560);
+
     m_robotContainer = new RobotContainer();
     
   }
@@ -58,9 +61,13 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("left RPM", RobotContainer.getShooter().getBottomEnc().getVelocity());
     SmartDashboard.putNumber("right RPM", RobotContainer.getShooter().getTopEnc().getVelocity());
     SmartDashboard.putNumber("Voltage?", 1/RobotContainer.shooterMotorTop.getBusVoltage());
-    SmartDashboard.putNumber("Change RPM", 4560);
-    System.out.println(SmartDashboard.getNumber("Change RPM", 4560));
     SmartDashboard.putNumber("Power?", RobotContainer.pdp.getCurrent(12));
+
+    SmartDashboard.putNumber("SetPoint", RobotContainer.getShooter().setPoint);
+    System.out.println(RobotContainer.getShooter().setPoint);
+
+    SmartDashboard.putData("IncreaseRPM", new IncreaseRPM());
+    SmartDashboard.putData("DecreaseRPM", new DecreaseRPM());
 
     CommandScheduler.getInstance().run();
 
@@ -125,11 +132,13 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic() 
   {
-      SmartDashboard.putNumber("Shooter Top Enc RPM", RobotContainer.getShooter().getTopEnc().getVelocity());
-      SmartDashboard.putNumber("Shooter Bottom Enc RPM", RobotContainer.getShooter().getBottomEnc().getVelocity());
-      SmartDashboard.putNumber("Final_Setpoint", MoveShooterTeleop.setPointFinal);
-      SmartDashboard.putNumber("Current_Setpoint_Top", MoveShooterTeleop. lsetPoint);
-      SmartDashboard.putNumber("Current_Setpoint_Btm", MoveShooterTeleop. rsetPoint);
+      // SmartDashboard.putNumber("Shooter Top Enc RPM", RobotContainer.getShooter().getTopEnc().getVelocity());
+      // SmartDashboard.putNumber("Shooter Bottom Enc RPM", RobotContainer.getShooter().getBottomEnc().getVelocity());
+      // SmartDashboard.putNumber("Final_Setpoint", MoveShooterTeleop.setPointFinal);
+      // SmartDashboard.putNumber("Current_Setpoint_Top", MoveShooterTeleop. lsetPoint);
+      // SmartDashboard.putNumber("Current_Setpoint_Btm", MoveShooterTeleop. rsetPoint);
+
+
   }
 
   @Override

@@ -1,10 +1,8 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.Robot;
+
 import frc.robot.RobotContainer;
 
 public class MoveShooterTeleop extends CommandBase
@@ -25,7 +23,7 @@ public class MoveShooterTeleop extends CommandBase
 
         lsetPoint = 0;
         rsetPoint = 0;
-        setPointFinal = SmartDashboard.getNumber("Change RPI", 4560);
+        setPointFinal = SmartDashboard.getNumber("Change RPM", 4560);
         RobotContainer.getShooter().shooterInitTop();
         RobotContainer.getShooter().shooterInitBtm();
         //RobotContainer.getShooter().moveShooter(speed);
@@ -34,29 +32,29 @@ public class MoveShooterTeleop extends CommandBase
     @Override
     public void execute() {
 
-        if (RobotContainer.getShooter().getTopEnc().getVelocity() >= -50 && RobotContainer.getShooter().getTopEnc().getVelocity() <= 50) {
-            //setPointFinal = ((-RobotContainer.getJoy().getAxisType(3) + 1) * 6000);
-        }
+        // if (RobotContainer.getShooter().getTopEnc().getVelocity() >= -50 && RobotContainer.getShooter().getTopEnc().getVelocity() <= 50) {
+        //     //setPointFinal = ((-RobotContainer.getJoy().getAxisType(3) + 1) * 6000);
+        // }
         
 
-        if (RobotContainer.getShooter().getTopEnc().getVelocity() <= setPointFinal && RobotContainer.getJoy().getRawButton(1) && lsetPoint < setPointFinal) {
-            lsetPoint = lsetPoint + setPointFinal/75;
-        } else if (lsetPoint >= setPointFinal && RobotContainer.getJoy().getRawButton(1)) {
-            lsetPoint = setPointFinal;
-        } else if (!RobotContainer.getJoy().getRawButton(1)) {
-            lsetPoint = 0;
-        }
-        if (RobotContainer.getShooter().getBottomEnc().getVelocity() <= setPointFinal && RobotContainer.getJoy().getRawButton(1) && rsetPoint < setPointFinal) {
-            rsetPoint = rsetPoint + setPointFinal/75;
-        } else if (rsetPoint >= setPointFinal && RobotContainer.getJoy().getRawButton(1)) {
-            rsetPoint = setPointFinal;
-        } else if (!RobotContainer.getJoy().getRawButton(1)) {
-            rsetPoint = 0;
-        }
+        // if (RobotContainer.getShooter().getTopEnc().getVelocity() <= setPointFinal && RobotContainer.getJoy().getRawButton(1) && lsetPoint < setPointFinal) {
+        //     lsetPoint = lsetPoint + setPointFinal/75;
+        // } else if (lsetPoint >= setPointFinal && RobotContainer.getJoy().getRawButton(1)) {
+        //     lsetPoint = setPointFinal;
+        // } else if (!RobotContainer.getJoy().getRawButton(1)) {
+        //     lsetPoint = 0;
+        // }
+        // if (RobotContainer.getShooter().getBottomEnc().getVelocity() <= setPointFinal && RobotContainer.getJoy().getRawButton(1) && rsetPoint < setPointFinal) {
+        //     rsetPoint = rsetPoint + setPointFinal/75;
+        // } else if (rsetPoint >= setPointFinal && RobotContainer.getJoy().getRawButton(1)) {
+        //     rsetPoint = setPointFinal;
+        // } else if (!RobotContainer.getJoy().getRawButton(1)) {
+        //     rsetPoint = 0;
+        // }
         
-        RobotContainer.getShooter().moveShooter(lsetPoint, rsetPoint);
+        RobotContainer.getShooter().moveShooter(setPointFinal, rsetPoint);
         
-        // RobotContainer.getShooter().movePercent(.9);
+        // RobotContainer.getShooter().movePercent(.75);
 
         System.out.println("Shooter is running " + RobotContainer.getJoy().getRawButton(1));
     }

@@ -7,6 +7,7 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,6 +41,8 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Change RPM", 4560);
 
     m_robotContainer = new RobotContainer();
+    SmartDashboard.putData("IncreaseRPM", new IncreaseRPM());
+    SmartDashboard.putData("DecreaseRPM", new DecreaseRPM());
     
   }
 
@@ -66,8 +69,8 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("SetPoint", RobotContainer.getShooter().setPoint);
     System.out.println(RobotContainer.getShooter().setPoint);
 
-    SmartDashboard.putData("IncreaseRPM", new IncreaseRPM());
-    SmartDashboard.putData("DecreaseRPM", new DecreaseRPM());
+
+    // Shuffleboard.getTab("SmartDashboard").add("Test Button", new DecreaseRPM()).withWidget(BuiltInWidgets.kCommand);
 
     CommandScheduler.getInstance().run();
 

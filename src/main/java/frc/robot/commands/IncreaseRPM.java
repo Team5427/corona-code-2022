@@ -10,6 +10,11 @@ public class IncreaseRPM extends CommandBase{
     }
 
     @Override
+    public void initialize(){
+        RobotContainer.getShooter().addToSetPoint(100);
+    }
+
+    @Override
     public void execute(){
     }
 
@@ -20,7 +25,7 @@ public class IncreaseRPM extends CommandBase{
 
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.getShooter().addToSetPoint(100);
+        
     }
 
 }

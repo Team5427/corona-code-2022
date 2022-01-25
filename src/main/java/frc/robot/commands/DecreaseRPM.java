@@ -12,7 +12,6 @@ public class DecreaseRPM extends CommandBase{
 
     @Override
     public void initialize(){
-        System.out.println("=============================");
     }
     @Override
     public void execute(){
@@ -25,8 +24,6 @@ public class DecreaseRPM extends CommandBase{
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("changed " + count);
-        count++;
         RobotContainer.getShooter().addToSetPoint(-100);
     }
 

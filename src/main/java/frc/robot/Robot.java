@@ -30,6 +30,8 @@ public class Robot extends TimedRobot
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  public double RangeIn;
   
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -140,6 +142,10 @@ public class Robot extends TimedRobot
       // SmartDashboard.putNumber("Final_Setpoint", MoveShooterTeleop.setPointFinal);
       // SmartDashboard.putNumber("Current_Setpoint_Top", MoveShooterTeleop. lsetPoint);
       // SmartDashboard.putNumber("Current_Setpoint_Btm", MoveShooterTeleop. rsetPoint);
+      RangeIn = RobotContainer.getUltrasonic().getRangeInches();
+      SmartDashboard.putNumber("Ultrasonic Range (in)", RangeIn);
+      SmartDashboard.putNumber("Ultrasonic Range (ft)", RangeIn/12);
+
 
 
   }

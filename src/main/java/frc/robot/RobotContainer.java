@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -44,6 +45,8 @@ public class RobotContainer
   private static Joystick joy;
   private static Button shooterTeleop;
 
+  private static Ultrasonic ultra;
+
   //motors 
   public static CANSparkMax shooterMotorTop;
   public static CANSparkMax shooterMotorBottom;
@@ -59,6 +62,7 @@ public class RobotContainer
   private static SparkMaxPIDController pidcontrol_shooter_btm;
 
   public static PowerDistribution pdp;
+
 
   //camera
   
@@ -80,6 +84,9 @@ public class RobotContainer
     shooterBottomEnc = shooterMotorBottom.getEncoder();
 
     pdp = new PowerDistribution(0, ModuleType.kCTRE);
+
+    ultra = new Ultrasonic(Constants.ULTRA_PORT_1, Constants.ULTRA_PORT_2);
+    ultra.setAutomaticMode(true);
 
 
     
@@ -122,5 +129,6 @@ public class RobotContainer
   }
   public static Shooter getShooter(){return shooter;}
   public static Joystick getJoy(){return joy;}
+  public static Ultrasonic getUltrasonic(){return ultra;}
   
 }

@@ -25,4 +25,7 @@ public final class Constants
 
     public static final int SHOOTER_MOTOR_TOP = 2;
     public static final int SHOOTER_MOTOR_BOTTOM = 3;
+
+    public static final int ULTRA_PORT_1 = 1;
+    public static final int ULTRA_PORT_2 = 2;
 }

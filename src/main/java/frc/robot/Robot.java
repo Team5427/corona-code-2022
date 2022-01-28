@@ -67,7 +67,7 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Power?", RobotContainer.pdp.getCurrent(12));
 
     SmartDashboard.putNumber("SetPoint", RobotContainer.getShooter().setPoint);
-    System.out.println(RobotContainer.getShooter().setPoint);
+    //System.out.println(RobotContainer.getShooter().setPoint);
 
 
     // Shuffleboard.getTab("SmartDashboard").add("Test Button", new DecreaseRPM()).withWidget(BuiltInWidgets.kCommand);

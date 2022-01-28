@@ -97,16 +97,17 @@ public class Shooter extends SubsystemBase
 
     public void moveShooter(double tsetpoint, double bsetpoint)
     {
-        SmartDashboard.putNumber("SetPoint", tsetpoint);
-        pid_top_ss.setReference(tsetpoint, CANSparkMax.ControlType.kVelocity);
+        SmartDashboard.putNumber("SetPoint", setPoint);
+        pid_top_ss.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
+        //pid_btm_ss.setReference(bsetpoint, CANSparkMax.ControlType.kVelocity);
         shooterMotorBottom.set(shooterMotorTop.get());
     }
 
-    public void moveShooter(){
-        SmartDashboard.putNumber("SetPoint", setPoint);
-        pid_top_ss.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
-        shooterMotorBottom.set(shooterMotorTop.get());
-    }
+    // public void moveShooter(){
+    //     SmartDashboard.putNumber("SetPoint", setPoint);
+    //     pid_top_ss.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
+    //     shooterMotorBottom.set(shooterMotorTop.get());
+    // }
 
     public void movePercent(double speed){
         shooterMotorTop.set(speed);

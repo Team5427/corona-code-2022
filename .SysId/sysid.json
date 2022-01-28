@@ -1,0 +1,11 @@
+{
+  "SysId": {
+    "Analysis Type": "General Mechanism",
+    "AnalyzerJSONLocation": "C:\\PP\\Trajectory\\Saves\\sysid_data20220124-204246.json",
+    "NetworkTables Settings": {
+      "serverTeam": "5427"
+    },
+    "mode": "Client",
+    "serverTeam": "5427"
+  }
+}

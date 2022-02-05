@@ -43,7 +43,7 @@ public class VisionTurn extends CommandBase
 
 
     if(!Robot.hasTarget){
-      // System.out.println("Get the target on the screen, dumbass.");
+      System.out.println("Get the target on the screen, dumbass.");
       driveTrain.stop();
     }
     else{

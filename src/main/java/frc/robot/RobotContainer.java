@@ -37,6 +37,7 @@ import frc.robot.commands.auto.AethiaLeftThreeCells;
 import frc.robot.commands.auto.AethiaRightSixCells;
 import frc.robot.commands.auto.AethiaRightThreeCells;
 import frc.robot.commands.auto.PointTurn;
+import frc.robot.commands.auto.TurnDegrees;
 import frc.robot.commands.auto.moveStraight;
 import frc.robot.commands.ShootAll;
 import frc.robot.commands.VisionTurn;
@@ -46,6 +47,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pulley;
 import frc.robot.subsystems.Transport;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.SPI;
@@ -225,7 +227,7 @@ public class RobotContainer
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     visionbtn.whenPressed(new moveStraight(0));
-    visionbtn2.whenHeld(new VisionTurn(0));
+    visionbtn2.whenHeld(new SequentialCommandGroup(new VisionTurn(0), new TurnDegrees(160)));
 
   }
 

@@ -42,22 +42,22 @@ public class VisionTurn extends CommandBase
   {
 
 
-    if(!Robot.hasTarget){
+    if(!Robot.hasTarget2){
       System.out.println("Get the target on the screen, dumbass.");
       driveTrain.stop();
     }
     else{
       if(Robot.yaw2 >= 20){
-        driveTrain.getRight().set(-0.4);
+        driveTrain.getRight().set(0.4);
         driveTrain.getLeft().set(-0.4);      }
       else if(Robot.yaw2 > 1){
-        driveTrain.getRight().set(-0.2);
+        driveTrain.getRight().set(0.2);
         driveTrain.getLeft().set(-0.2);      }
       else if(Robot.yaw2 <= -20){
-        driveTrain.getRight().set(0.4);
+        driveTrain.getRight().set(-0.4);
         driveTrain.getLeft().set(0.4);      }
       else if(Robot.yaw2 < -1){
-        driveTrain.getRight().set(0.2);
+        driveTrain.getRight().set(-0.2);
         driveTrain.getLeft().set(0.2);
 
       }
@@ -77,10 +77,13 @@ public class VisionTurn extends CommandBase
   @Override
   public boolean isFinished()
   {
-    if(!Robot.hasTarget || (Robot.yaw2 >= 3 || Robot.yaw2 <= -3))
-      return false;
+    if(RobotContainer.getAHRS().getRate() > -10 && RobotContainer.getAHRS().getRate() < 10) 
+    {
+        return true;
+    }
 
-    return true;
+
+  return false;
   }
 
 }

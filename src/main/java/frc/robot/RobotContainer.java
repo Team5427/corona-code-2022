@@ -37,7 +37,9 @@ import frc.robot.commands.auto.AethiaLeftThreeCells;
 import frc.robot.commands.auto.AethiaRightSixCells;
 import frc.robot.commands.auto.AethiaRightThreeCells;
 import frc.robot.commands.auto.PointTurn;
+import frc.robot.commands.auto.moveStraight;
 import frc.robot.commands.ShootAll;
+import frc.robot.commands.VisionTurn;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -75,10 +77,12 @@ public class RobotContainer
   private static Button moveElevatorUp;
   private static Button moveElevatorDown;
   public static Button shootAll;
+  private static Button visionbtn;
+  private static Button visionbtn2;
 
   //motors 
-  private final MotorController frontLeft, rearLeft;
-  private final MotorController frontRight,rearRight;
+  public final MotorController frontLeft, rearLeft;
+  public final MotorController frontRight,rearRight;
   private static MotorControllerGroup leftDrive;
   private static MotorControllerGroup rightDrive;
   private static MotorController transportMotor;
@@ -135,10 +139,13 @@ public class RobotContainer
     frontRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
     rearRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
     rightDrive = new MotorControllerGroup(frontRight, rearRight);
+    rightDrive.setInverted(true);
     drive = new DifferentialDrive(leftDrive, rightDrive);
     drive.setSafetyEnabled(false);
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
     driveTrain.setDefaultCommand(new DriveWithJoystick());
+
+
 
     intakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR);
     intake = new Intake(intakeMotor);
@@ -201,9 +208,11 @@ public class RobotContainer
     shooterTeleop = new JoystickButton(joy, Constants.SHOOTER_TELEOP);
     tiltDownButton = new JoystickButton(joy, Constants.TILT_BUTTON_DOWN);
     tiltAuto = new JoystickButton(joy, Constants.TILT_AUTO_BUTTON);
-    shootAll = new JoystickButton(joy, Constants.SHOOT_ALL_BUTTON);
+    //shootAll = new JoystickButton(joy, Constants.SHOOT_ALL_BUTTON);
     moveElevatorUp = new JoystickButton(joy, Constants.ELEVATOR_UP_BUTTON);
     moveElevatorDown = new JoystickButton(joy, Constants.ELEVATOR_DOWN_BUTTON);
+    visionbtn = new JoystickButton(joy, Constants.VISION_BTN);
+    visionbtn2 = new JoystickButton(joy, Constants.VISION_BTN2);
   
 
     intakeButton.whileHeld(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
@@ -215,7 +224,9 @@ public class RobotContainer
     tiltAuto.whenPressed(new MoveTiltAuto(Constants.TILT_SPEED));
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
-    shootAll.whenPressed(new ShootAll(Constants.TIME_BETWEEN_CELLS, Constants.TIME_AFTER_CELLS,1));
+    visionbtn.whenPressed(new moveStraight(0));
+    visionbtn2.whenHeld(new VisionTurn(0));
+
   }
 
   /**

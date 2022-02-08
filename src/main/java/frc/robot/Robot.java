@@ -36,8 +36,18 @@ public class Robot extends TimedRobot
   public static double PixelX;
   public static double PixelY;
   public static boolean hasTarget;
-  double default_all = 0.0;
 
+  NetworkTable table2;
+
+  
+  public static double pitch2;
+  public static double yaw2;
+  public static double skew2;
+  public static double area2;
+  public static double PixelX2;
+  public static double PixelY2;
+  public static boolean hasTarget2;
+  double default_all = 0.0;
 
   private RobotContainer m_robotContainer;
   
@@ -54,9 +64,14 @@ public class Robot extends TimedRobot
     DriveTrain.rightSpeed = 0;
     
     NetworkTableInstance PIInstance = NetworkTableInstance.create();
-    PIInstance.setServer("photonvision");
+    PIInstance.setServer("ballvision");
     PIInstance.startClient();
-    table = PIInstance.getTable("photonvision").getSubTable("photoncam");
+    table = PIInstance.getTable("photonvision").getSubTable("photoncam2");
+
+    NetworkTableInstance PIInstance2 = NetworkTableInstance.create();
+    PIInstance2.setServer("targetvision");
+    PIInstance2.startClient();
+    table2 = PIInstance2.getTable("photonvision").getSubTable("photoncam");
 
   }
 
@@ -84,15 +99,27 @@ public class Robot extends TimedRobot
     PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
     PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
 
+    hasTarget2 = table2.getEntry("hasTarget").getBoolean(true);
+    pitch2 = table2.getEntry("targetPitch").getDouble(default_all);
+    yaw2 = table2.getEntry("targetYaw").getDouble(default_all);
+    skew2 = table2.getEntry("targetSkew").getDouble(default_all);
+    area2 = table2.getEntry("targetArea").getDouble(default_all);
+    PixelX2 = table2.getEntry("targetPixelsX").getDouble(default_all);
+    PixelY2 = table2.getEntry("targetPixelsY").getDouble(default_all);
+
+
     SmartDashboard.putBoolean("Intake Covered", RobotContainer.getTransport().getIntakeCovered());
     SmartDashboard.putBoolean("Transport covered", RobotContainer.getTransport().getTransportCovered());
     SmartDashboard.putBoolean("Pulley Covered", RobotContainer.getPulley().getPulleyCovered());
+    SmartDashboard.putBoolean("HasTarget", hasTarget);
 
     SmartDashboard.putNumber("Yaw", RobotContainer.getAHRS().getYaw());
     SmartDashboard.putNumber("Left", RobotContainer.getElevator().getLeftEnc().getDistance());
     SmartDashboard.putNumber("Right", RobotContainer.getElevator().getRightEnc().getDistance());
     SmartDashboard.putNumber("Shooter Top Enc Rate", RobotContainer.getShooter().getTopEnc().getRate()*(60.0/1024.0));
     SmartDashboard.putNumber("Shooter Bottom Enc Rate", RobotContainer.getShooter().getBottomEnc().getRate()*(60.0/1024.0));
+    SmartDashboard.putNumber("drive train yes yes yes", RobotContainer.getJoy().getY());
+
   }
 
   /**

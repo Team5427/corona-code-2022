@@ -42,7 +42,9 @@ public class DriveTrain extends SubsystemBase
     public void tankDrive(double leftSpeed, double rightSpeed)
     {
         driveBase.tankDrive(leftSpeed, rightSpeed);
+
     }
+
 
     public void rampLeft(double speed)
     {
@@ -145,6 +147,8 @@ public class DriveTrain extends SubsystemBase
     public void takeJoystickInputs(Joystick joy)
     {
         driveBase.arcadeDrive(joy.getY(), -joy.getZ() * 0.65);
+        SmartDashboard.putNumber("drive train yes yes", joy.getY());
+
     }
 
     public DifferentialDrive getDriveBase()

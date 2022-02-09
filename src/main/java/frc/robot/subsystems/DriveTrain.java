@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -19,11 +20,18 @@ public class DriveTrain extends SubsystemBase
     //ramping down
     private DifferentialDrive driveBase;
 
-    public DriveTrain(MotorControllerGroup left, MotorControllerGroup right, DifferentialDrive driveBase)
+    private Encoder leftDrivEncoder, rightDrivEncoder;
+
+    public DriveTrain(MotorControllerGroup left, MotorControllerGroup right, DifferentialDrive driveBase, Encoder leftDrivEncoder, Encoder rightDrivEncoder)
     {
         this.left = left;
         this.right = right;
         this.driveBase = driveBase;
+        this.leftDrivEncoder = leftDrivEncoder;
+        this.rightDrivEncoder = rightDrivEncoder;
+        leftDrivEncoder.setDistancePerPulse(.479);
+        rightDrivEncoder.setDistancePerPulse(.479);
+
     }
 
     public MotorControllerGroup getLeft()
@@ -57,8 +65,16 @@ public class DriveTrain extends SubsystemBase
         return driveBase;
     }
 
-    @Override
-    public void periodic()
-    {}
+    public void setLeft(double speed) {
+        left.set(speed);
+    }
+
+    public void setRight(double speed) {
+        right.set(speed);
+    }
+
+    public double getDistance() {
+        return leftDrivEncoder.getDistance();
+    }
     
 }

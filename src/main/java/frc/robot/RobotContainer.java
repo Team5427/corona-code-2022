@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.auto.MoveForwardPID;
+import frc.robot.commands.auto.Turn;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
@@ -54,12 +56,16 @@ public class RobotContainer
 
   //sensors
   private static AHRS ahrs;
+  private static Encoder leftDrivEncoder;
+  private static Encoder rightDrivEncoder;
 
   //subsystems
   private static DifferentialDrive drive;
   private static DriveTrain driveTrain;
 
-  //camera
+  //button
+  private static Button turnButton;
+  private static Button moveForwardButton;
   
 
   /**
@@ -76,8 +82,12 @@ public class RobotContainer
     rightDrive = new MotorControllerGroup(frontRight, rearRight);
     drive = new DifferentialDrive(leftDrive, rightDrive);
     drive.setSafetyEnabled(false);
-    driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
+
+    leftDrivEncoder = new Encoder(2,3);
+    rightDrivEncoder = new Encoder(0,1);
+    driveTrain = new DriveTrain(leftDrive, rightDrive, drive, leftDrivEncoder, rightDrivEncoder);
     driveTrain.setDefaultCommand(new DriveWithJoystick());
+
 
     ahrs = new AHRS(SPI.Port.kMXP);
 
@@ -94,6 +104,12 @@ public class RobotContainer
   private void configureButtonBindings() 
   {
     joy = new Joystick(0);
+    turnButton = new JoystickButton(joy, 10);
+    moveForwardButton = new JoystickButton(joy, 11);
+
+    turnButton.whenPressed(new Turn(45));
+    moveForwardButton.whenPressed(new MoveForwardPID(1));
+    
   }
 
   /**

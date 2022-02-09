@@ -28,14 +28,15 @@ public final class Constants
     //Speeds
 
     /*****************Motor ports*****************/
-    public static final int LEFT_TOP_MOTOR = 14; 
-	public static final int LEFT_BOTTOM_MOTOR = 15;
-	public static final int RIGHT_TOP_MOTOR = 0;
-    public static final int RIGHT_BOTTOM_MOTOR = 1;
+    public static final int LEFT_TOP_MOTOR = 7; 
+	public static final int LEFT_BOTTOM_MOTOR = 8;
+	public static final int RIGHT_TOP_MOTOR = 10;
+    public static final int RIGHT_BOTTOM_MOTOR = 11;
 
     /*******************Sensors*******************/
     public static final int dt_right_1 = 4;
     public static final int dt_right_2 = 5;
     public static final int dt_left_1 = 6;
     public static final int dt_left_2 = 7;
+    public static final double AUTONOMOUS_DRIVE_SPEED = .5;
 }

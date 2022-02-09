@@ -227,7 +227,7 @@ public class RobotContainer
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     visionbtn.whenPressed(new moveStraight(0));
-    visionbtn2.whenHeld(new SequentialCommandGroup(new VisionTurn(0), new TurnDegrees(160)));
+    visionbtn2.whileHeld(new VisionTurn(0));
 
   }
 

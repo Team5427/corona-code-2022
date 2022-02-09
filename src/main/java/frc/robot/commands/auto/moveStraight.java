@@ -28,7 +28,7 @@ public class moveStraight extends CommandBase {
 
     @Override
     public void initialize() {
-        //locked = false;
+        locked = false;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class moveStraight extends CommandBase {
             driveTrain.getLeft().set(-0.2);
         } else {
 
-            //locked = true;
+            locked = true;
             if (err < -3) {
                 setSpeedLeft = -0.3;
                 setSpeedRight = -0.4;
@@ -56,7 +56,7 @@ public class moveStraight extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Robot.pitch <= -12 && (Robot.yaw >= -3 || Robot.yaw <= 3)) {
+        if (Robot.pitch <= -10 && (Robot.yaw >= -3 || Robot.yaw <= 3) || (!Robot.hasTarget && locked)) {
             return true;
         }
         //return !(RobotContainer.getJoy().getRawButton(1));

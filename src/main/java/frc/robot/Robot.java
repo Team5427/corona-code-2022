@@ -119,6 +119,7 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Shooter Top Enc Rate", RobotContainer.getShooter().getTopEnc().getRate()*(60.0/1024.0));
     SmartDashboard.putNumber("Shooter Bottom Enc Rate", RobotContainer.getShooter().getBottomEnc().getRate()*(60.0/1024.0));
     SmartDashboard.putNumber("drive train yes yes yes", RobotContainer.getJoy().getY());
+    SmartDashboard.putNumber("drive train yes yes yes yes", RobotContainer.getJoy().getAxisCount());
 
   }
 

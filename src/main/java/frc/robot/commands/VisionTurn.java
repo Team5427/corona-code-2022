@@ -62,6 +62,7 @@ public class VisionTurn extends CommandBase
 
       }
     }
+    
   }
 
 
@@ -77,7 +78,7 @@ public class VisionTurn extends CommandBase
   @Override
   public boolean isFinished()
   {
-    if(RobotContainer.getAHRS().getRate() > -10 && RobotContainer.getAHRS().getRate() < 10) 
+    if(Robot.yaw2 > -3 && Robot.yaw2 < 3) 
     {
         return true;
     }

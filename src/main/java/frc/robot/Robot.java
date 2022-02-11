@@ -6,6 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -28,8 +31,9 @@ public class Robot extends TimedRobot
 {
   private Command m_autonomousCommand;
   
-  NetworkTable table;
-
+  // NetworkTable table;
+  PhotonCamera ballCamera = new PhotonCamera("photoncam2");
+  PhotonTrackedTarget ballTarget;
   
   public static double pitch;
   public static double yaw;
@@ -39,8 +43,9 @@ public class Robot extends TimedRobot
   public static double PixelY;
   public static boolean hasTarget;
 
-  NetworkTable table2;
-
+  // NetworkTable table2;
+  public PhotonCamera targetCamera;
+  public PhotonTrackedTarget targetTarget;
   
   public static double pitch2;
   public static double yaw2;
@@ -65,15 +70,17 @@ public class Robot extends TimedRobot
     DriveTrain.leftSpeed = 0;
     DriveTrain.rightSpeed = 0;
     
-    NetworkTableInstance PIInstance = NetworkTableInstance.create();
-    PIInstance.setServer("ballvision");
-    PIInstance.startClient();
-    table = PIInstance.getTable("photonvision").getSubTable("photoncam2");
+    ballCamera = new PhotonCamera("photoncam2");
 
-    NetworkTableInstance PIInstance2 = NetworkTableInstance.create();
-    PIInstance2.setServer("targetvision");
-    PIInstance2.startClient();
-    table2 = PIInstance2.getTable("photonvision").getSubTable("photoncam");
+    // NetworkTableInstance PIInstance = NetworkTableInstance.create();
+    // PIInstance.setServer("ballvision");
+    // PIInstance.startClient();
+    // table = PIInstance.getTable("photonvision").getSubTable("photoncam2");
+    targetCamera = new PhotonCamera("photoncam");
+    // NetworkTableInstance PIInstance2 = NetworkTableInstance.create();
+    // PIInstance2.setServer("targetvision");
+    // PIInstance2.startClient();
+    // table2 = PIInstance2.getTable("photonvision").getSubTable("photoncam");
 
   }
 
@@ -97,22 +104,24 @@ public class Robot extends TimedRobot
     {
       CommandScheduler.getInstance().schedule(new MoveTransport(0.5));
     }
+    ballTarget = ballCamera.getLatestResult().getBestTarget();
 
-    hasTarget = table.getEntry("hasTarget").getBoolean(true);
-    pitch = table.getEntry("targetPitch").getDouble(default_all);
-    yaw = table.getEntry("targetYaw").getDouble(default_all);
-    skew = table.getEntry("targetSkew").getDouble(default_all);
-    area = table.getEntry("targetArea").getDouble(default_all);
-    PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
-    PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
+    hasTarget = ballCamera.getLatestResult().hasTargets();
+    pitch = ballTarget.getPitch();
+    yaw = ballTarget.getYaw();
+    skew = ballTarget.getSkew();
+    area = ballTarget.getArea();
+    // PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
+    // PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
 
-    hasTarget2 = table2.getEntry("hasTarget").getBoolean(true);
-    pitch2 = table2.getEntry("targetPitch").getDouble(default_all);
-    yaw2 = table2.getEntry("targetYaw").getDouble(default_all);
-    skew2 = table2.getEntry("targetSkew").getDouble(default_all);
-    area2 = table2.getEntry("targetArea").getDouble(default_all);
-    PixelX2 = table2.getEntry("targetPixelsX").getDouble(default_all);
-    PixelY2 = table2.getEntry("targetPixelsY").getDouble(default_all);
+    targetTarget = targetCamera.getLatestResult().getBestTarget();
+
+    hasTarget2 = targetCamera.getLatestResult().hasTargets();
+    pitch2 = targetTarget.getPitch();
+    yaw2 = targetTarget.getYaw();
+    skew2 = targetTarget.getSkew();
+    area2 = targetTarget.getArea();
+
 
 
     SmartDashboard.putBoolean("Intake Covered", RobotContainer.getTransport().getIntakeCovered());

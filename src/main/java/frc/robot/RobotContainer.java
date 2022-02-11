@@ -40,6 +40,7 @@ import frc.robot.commands.auto.PointTurn;
 import frc.robot.commands.auto.TurnDegrees;
 import frc.robot.commands.auto.moveStraight;
 import frc.robot.commands.ShootAll;
+import frc.robot.commands.VisionMove;
 import frc.robot.commands.VisionTurn;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
@@ -226,8 +227,8 @@ public class RobotContainer
     tiltAuto.whenPressed(new MoveTiltAuto(Constants.TILT_SPEED));
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
-    visionbtn.whenPressed(new moveStraight(0));
-    visionbtn2.whileHeld(new VisionTurn(0));
+    visionbtn.whenPressed(new SequentialCommandGroup(new moveStraight(0), new VisionTurn(0)));
+    visionbtn2.whenPressed(new VisionTurn(0));
 
   }
 

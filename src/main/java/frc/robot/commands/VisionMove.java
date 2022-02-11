@@ -1,4 +1,5 @@
 package frc.robot.commands;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.Robot;
@@ -10,6 +11,8 @@ public class VisionMove extends CommandBase
   private DriveTrain driveTrain = RobotContainer.getDriveTrain();
 
   double bias = 0;
+  boolean found = false;
+  double start = Timer.getFPGATimestamp();
   /**
    * Creates a new MoveStraight.
    */
@@ -27,7 +30,7 @@ public class VisionMove extends CommandBase
   @Override
   public void initialize()
   {
-
+    found = false;
   }
 
   @Override
@@ -36,6 +39,8 @@ public class VisionMove extends CommandBase
 
 
     if(!Robot.hasTarget){
+      driveTrain.getRight().set(0.2);
+      driveTrain.getLeft().set(0.2);
     }
     else{
         if(Robot.pitch < 4){
@@ -61,9 +66,19 @@ public class VisionMove extends CommandBase
   @Override
   public boolean isFinished()
   {
-    if(!Robot.hasTarget || (Robot.pitch < 4 || Robot.pitch > 10))
-      return false;
+    if(!Robot.hasTarget || (Robot.pitch < 4 || Robot.pitch > 10)){
 
+        return false;
+    }
+    // if(!found){
+    //   start = Timer.getFPGATimestamp();
+    //   found = true;
+
+    // }
+    // if(Timer.getFPGATimestamp() - start >= 1)
+    // return true;
+
+    // return false;
     return true;
   }
 

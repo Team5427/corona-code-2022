@@ -56,7 +56,7 @@ public class moveStraight extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Robot.pitch <= -10 && (Robot.yaw >= -3 || Robot.yaw <= 3) || (!Robot.hasTarget && locked)) {
+        if (Robot.pitch <= -10 && (Robot.yaw >= -3 || Robot.yaw <= 3)) {
             return true;
         }
         //return !(RobotContainer.getJoy().getRawButton(1));

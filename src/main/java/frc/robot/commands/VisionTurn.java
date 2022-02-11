@@ -17,6 +17,8 @@ public class VisionTurn extends CommandBase
   private DriveTrain driveTrain = RobotContainer.getDriveTrain();
 
   double bias = 0;
+  public static boolean isRunning;
+  public static int counter;
   /**
    * Creates a new MoveStraight.
    */
@@ -34,7 +36,8 @@ public class VisionTurn extends CommandBase
   @Override
   public void initialize()
   {
-
+    isRunning = true;
+    counter = 0;
   }
 
   @Override
@@ -43,25 +46,26 @@ public class VisionTurn extends CommandBase
 
 
     if(!Robot.hasTarget2){
-      System.out.println("Get the target on the screen, dumbass.");
-      driveTrain.stop();
+      driveTrain.getRight().set(0.4);
+      driveTrain.getLeft().set(-0.4);     
     }
     else{
       if(Robot.yaw2 >= 20){
         driveTrain.getRight().set(0.4);
         driveTrain.getLeft().set(-0.4);      }
       else if(Robot.yaw2 > 1){
-        driveTrain.getRight().set(0.2);
-        driveTrain.getLeft().set(-0.2);      }
+        driveTrain.getRight().set(0.15);
+        driveTrain.getLeft().set(-0.15);      }
       else if(Robot.yaw2 <= -20){
         driveTrain.getRight().set(-0.4);
         driveTrain.getLeft().set(0.4);      }
       else if(Robot.yaw2 < -1){
-        driveTrain.getRight().set(-0.2);
-        driveTrain.getLeft().set(0.2);
+        driveTrain.getRight().set(-0.15);
+        driveTrain.getLeft().set(0.15);
 
-      }
+      } 
     }
+
     
   }
 
@@ -72,15 +76,19 @@ public class VisionTurn extends CommandBase
   public void end(boolean interrupted)
   {
     driveTrain.stop();
+    isRunning = false;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished()
   {
-    if(Robot.yaw2 > -3 && Robot.yaw2 < 3) 
+    if(Robot.yaw2 > -3 && Robot.yaw2 < 3 && Robot.hasTarget2) 
     {
+      counter++;
+      if(counter > 8){
         return true;
+      }
     }
 
 

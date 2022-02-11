@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.MoveTransport;
+import frc.robot.commands.VisionTurn;
 import frc.robot.commands.auto.AethiaLeftThreeCells;
 import frc.robot.subsystems.DriveTrain;
 
@@ -91,6 +93,11 @@ public class Robot extends TimedRobot
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
+    if (RobotContainer.getJoy().getRawButton(7))
+    {
+      CommandScheduler.getInstance().schedule(new MoveTransport(0.5));
+    }
+
     hasTarget = table.getEntry("hasTarget").getBoolean(true);
     pitch = table.getEntry("targetPitch").getDouble(default_all);
     yaw = table.getEntry("targetYaw").getDouble(default_all);
@@ -112,6 +119,7 @@ public class Robot extends TimedRobot
     SmartDashboard.putBoolean("Transport covered", RobotContainer.getTransport().getTransportCovered());
     SmartDashboard.putBoolean("Pulley Covered", RobotContainer.getPulley().getPulleyCovered());
     SmartDashboard.putBoolean("HasTarget", hasTarget);
+    SmartDashboard.putBoolean("Running", VisionTurn.isRunning);
 
     SmartDashboard.putNumber("Yaw", RobotContainer.getAHRS().getYaw());
     SmartDashboard.putNumber("Left", RobotContainer.getElevator().getLeftEnc().getDistance());
@@ -180,7 +188,6 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic() 
   {
-    
   }
 
   @Override

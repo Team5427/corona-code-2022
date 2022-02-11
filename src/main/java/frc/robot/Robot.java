@@ -76,7 +76,9 @@ public class Robot extends TimedRobot
     // PIInstance.setServer("ballvision");
     // PIInstance.startClient();
     // table = PIInstance.getTable("photonvision").getSubTable("photoncam2");
+
     targetCamera = new PhotonCamera("photoncam");
+
     // NetworkTableInstance PIInstance2 = NetworkTableInstance.create();
     // PIInstance2.setServer("targetvision");
     // PIInstance2.startClient();
@@ -104,23 +106,32 @@ public class Robot extends TimedRobot
     {
       CommandScheduler.getInstance().schedule(new MoveTransport(0.5));
     }
-    ballTarget = ballCamera.getLatestResult().getBestTarget();
 
     hasTarget = ballCamera.getLatestResult().hasTargets();
-    pitch = ballTarget.getPitch();
-    yaw = ballTarget.getYaw();
-    skew = ballTarget.getSkew();
-    area = ballTarget.getArea();
+    SmartDashboard.putBoolean("has ball taret", hasTarget);
+
+    if(hasTarget){
+      ballTarget = ballCamera.getLatestResult().getBestTarget();
+
+      pitch = ballTarget.getPitch();
+      yaw = ballTarget.getYaw();
+      skew = ballTarget.getSkew();
+      area = ballTarget.getArea();
+    }
     // PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
     // PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
 
-    targetTarget = targetCamera.getLatestResult().getBestTarget();
-
     hasTarget2 = targetCamera.getLatestResult().hasTargets();
-    pitch2 = targetTarget.getPitch();
-    yaw2 = targetTarget.getYaw();
-    skew2 = targetTarget.getSkew();
-    area2 = targetTarget.getArea();
+    SmartDashboard.putBoolean("has target taret", hasTarget2);
+
+    if(hasTarget2){
+      targetTarget = targetCamera.getLatestResult().getBestTarget();
+
+      pitch2 = targetTarget.getPitch();
+      yaw2 = targetTarget.getYaw();
+      skew2 = targetTarget.getSkew();
+      area2 = targetTarget.getArea();
+    }
 
 
 

@@ -1,4 +1,5 @@
 package frc.robot.commands.auto;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -15,6 +16,8 @@ public class moveStraight extends CommandBase {
     double setSpeedLeft = -0.2;
     double setSpeedRight = 0.2;
     boolean locked;
+
+    double timer = 0;
     /**
      * Creates a new MoveStraight.
      */
@@ -56,8 +59,14 @@ public class moveStraight extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Robot.pitch <= -10 && (Robot.yaw >= -3 || Robot.yaw <= 3)) {
-            return true;
+        if (Robot.pitch <= -8 && (Robot.yaw >= -3 || Robot.yaw <= 3)) {
+            if(timer == 0)
+                timer = Timer.getFPGATimestamp();
+            if(Timer.getFPGATimestamp() - timer >= 1){
+                return true;
+            }
+            
+            return false;
         }
         //return !(RobotContainer.getJoy().getRawButton(1));
         return false;

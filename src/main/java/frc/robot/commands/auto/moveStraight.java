@@ -12,9 +12,11 @@ public class moveStraight extends CommandBase {
     private DriveTrain driveTrain = RobotContainer.getDriveTrain();
 
     double bias = 0;
+    double slowSpeed;
+    double fastSpeed;
     double err;
-    double setSpeedLeft = -0.2;
-    double setSpeedRight = 0.2;
+    double setSpeedLeft;
+    double setSpeedRight;
     boolean locked;
 
     double timer = 0;
@@ -23,10 +25,12 @@ public class moveStraight extends CommandBase {
      */
   
     //bias based on distance model in case it is needed
-    public moveStraight(double bias)
+    public moveStraight(double bias, double slowSpeed, double fastSpeed)
     {
       addRequirements(RobotContainer.getDriveTrain());
       this.bias = bias;
+      this.slowSpeed = slowSpeed;
+      this.fastSpeed = fastSpeed;
     }
 
     @Override
@@ -39,17 +43,17 @@ public class moveStraight extends CommandBase {
         err = Robot.yaw;
         
         if(!Robot.hasTarget){
-            driveTrain.getRight().set(0.2);
-            driveTrain.getLeft().set(-0.2);
+            driveTrain.getRight().set(slowSpeed);
+            driveTrain.getLeft().set(-slowSpeed);
         } else {
 
             locked = true;
             if (err < -3) {
-                setSpeedLeft = -0.3;
-                setSpeedRight = -0.4;
+                setSpeedLeft = -slowSpeed;
+                setSpeedRight = -fastSpeed;
             } if (err > 3) {
-                setSpeedRight = -0.3;
-                setSpeedLeft = -0.4;
+                setSpeedRight = -slowSpeed;
+                setSpeedLeft = -fastSpeed;
             }
             
             driveTrain.getLeft().set(setSpeedLeft);
@@ -59,16 +63,9 @@ public class moveStraight extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Robot.pitch <= -8 && (Robot.yaw >= -3 || Robot.yaw <= 3)) {
-            if(timer == 0)
-                timer = Timer.getFPGATimestamp();
-            if(Timer.getFPGATimestamp() - timer >= 1){
-                return true;
-            }
-            
-            return false;
+        if (Robot.pitch <= 4 && (Robot.yaw >= -3 || Robot.yaw <= 3) ) {
+            return true;
         }
-        //return !(RobotContainer.getJoy().getRawButton(1));
         return false;
     }
 

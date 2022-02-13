@@ -19,15 +19,17 @@ public class VisionTurn extends CommandBase
   double bias = 0;
   public static boolean isRunning;
   public static int counter;
+  public static boolean isCW;
   /**
    * Creates a new MoveStraight.
    */
 
   //bias based on distance model in case it is needed
-  public VisionTurn(double bias)
+  public VisionTurn(double bias, boolean isCW)
   {
     addRequirements(RobotContainer.getDriveTrain());
     this.bias = bias;
+    this.isCW = isCW;
 
 
   }
@@ -45,20 +47,22 @@ public class VisionTurn extends CommandBase
   {
 
 
-    if(!Robot.hasTarget2){
+    if(!Robot.hasTarget2 && isCW){
       driveTrain.getRight().set(0.4);
       driveTrain.getLeft().set(-0.4);     
-    }
-    else{
+    } else if (!Robot.hasTarget2 && !isCW) {
+      driveTrain.getRight().set(-0.4);
+      driveTrain.getLeft().set(0.4);    
+    } else {
       if(Robot.yaw2 >= 20){
-        driveTrain.getRight().set(0.4);
-        driveTrain.getLeft().set(-0.4);      }
+        driveTrain.getRight().set(0.3);
+        driveTrain.getLeft().set(-0.3);      }
       else if(Robot.yaw2 > 1){
         driveTrain.getRight().set(0.15);
         driveTrain.getLeft().set(-0.15);      }
       else if(Robot.yaw2 <= -20){
-        driveTrain.getRight().set(-0.4);
-        driveTrain.getLeft().set(0.4);      }
+        driveTrain.getRight().set(-0.3);
+        driveTrain.getLeft().set(0.3);      }
       else if(Robot.yaw2 < -1){
         driveTrain.getRight().set(-0.15);
         driveTrain.getLeft().set(0.15);

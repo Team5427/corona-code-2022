@@ -36,7 +36,12 @@ import frc.robot.commands.auto.AethiaCenterThreeCells;
 import frc.robot.commands.auto.AethiaLeftThreeCells;
 import frc.robot.commands.auto.AethiaRightSixCells;
 import frc.robot.commands.auto.AethiaRightThreeCells;
+import frc.robot.commands.auto.BonkAuto;
+import frc.robot.commands.auto.MoveStraightPID;
+import frc.robot.commands.auto.PivotTurnDegrees;
 import frc.robot.commands.auto.PointTurn;
+import frc.robot.commands.auto.RapidReactAuton;
+import frc.robot.commands.auto.RapidReactNoVision;
 import frc.robot.commands.auto.TurnDegrees;
 import frc.robot.commands.auto.moveStraight;
 import frc.robot.commands.ShootAll;
@@ -227,8 +232,8 @@ public class RobotContainer
     tiltAuto.whenPressed(new MoveTiltAuto(Constants.TILT_SPEED));
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
-    visionbtn.whenPressed(new SequentialCommandGroup(new moveStraight(0), new VisionTurn(0)));
-    visionbtn2.whenPressed(new VisionTurn(0));
+    visionbtn.whenPressed(new RapidReactAuton());
+    visionbtn2.whenPressed(new TurnDegrees(62));
 
   }
 
@@ -239,7 +244,8 @@ public class RobotContainer
    */
   public static Command getAutonomousCommand() 
   {
-    return new AethiaRightThreeCells();
+    // return new RapidReactNoVision();
+    return new PivotTurnDegrees(90);
   }
 
   public static DriveTrain getDriveTrain(){return driveTrain;}
@@ -255,5 +261,5 @@ public class RobotContainer
   public static Shooter getShooter(){return shooter;}
   public static Ultrasonic getUltrasonic(){return ultra;}
   public static Elevator getElevator(){return elevator;}
-  public Command getTurn(){ return new PointTurn(90);}
+  public Command getTurn(){ return new PointTurn(260);}
 }

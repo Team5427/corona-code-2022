@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
-public class TurnDegrees extends CommandBase{
+public class PivotTurnDegrees extends CommandBase{
 
     private DriveTrain driveTrain = RobotContainer.getDriveTrain();
     private double err;
@@ -16,10 +16,11 @@ public class TurnDegrees extends CommandBase{
     private double degrees;
     private double post_degrees;
     private double cdegrees;
-    private double speed;
+    private double left_speed;
+    private double right_speed;
     private int count;
 
-    public TurnDegrees(double degrees) {
+    public PivotTurnDegrees(double degrees) {
         addRequirements(RobotContainer.getDriveTrain());
         this.degrees = degrees;
     }
@@ -46,18 +47,24 @@ public class TurnDegrees extends CommandBase{
         err_ttl = degrees - cdegrees;
         
         if(Math.abs(err) > 25){
-            speed = .5;
+            left_speed = .5;
+            right_speed = .5;
 
         } else {
-            speed = .15;
+            left_speed = .4;
+            right_speed = .4;
         }
 
         if(degrees > 180){
-            speed *= -1;
+            left_speed *= 0;
+            right_speed *= -1;
+        } else if (degrees < 180) {
+            left_speed *= 1;
+            right_speed *= 0;
         }
 
-        driveTrain.getLeft().set(-speed);
-        driveTrain.getRight().set(speed);
+        driveTrain.getLeft().set(-left_speed);
+        driveTrain.getRight().set(right_speed);
 
 
     }

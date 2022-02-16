@@ -58,6 +58,8 @@ public class Robot extends TimedRobot
   double default_all = 0.0;
 
   private RobotContainer m_robotContainer;
+
+  public static double turn_rbt_deg;
   
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -124,6 +126,8 @@ public class Robot extends TimedRobot
     PixelX2 = table2.getEntry("targetPixelsX").getDouble(default_all);
     PixelY2 = table2.getEntry("targetPixelsY").getDouble(default_all);
 
+    turn_rbt_deg = ((RobotContainer.getJoy().getRawAxis(3) * 180) + 180);
+
     // if(ballCamera.getLatestResult().hasTargets()){
     //   hasTarget = ballCamera.getLatestResult().hasTargets();
     //   ballTarget = ballCamera.getLatestResult().getBestTarget();
@@ -146,21 +150,15 @@ public class Robot extends TimedRobot
     //   area2 = targetTarget.getArea();
     // }
 
-    SmartDashboard.putBoolean("Intake Covered", RobotContainer.getTransport().getIntakeCovered());
-    SmartDashboard.putBoolean("Transport covered", RobotContainer.getTransport().getTransportCovered());
-    SmartDashboard.putBoolean("Pulley Covered", RobotContainer.getPulley().getPulleyCovered());
     SmartDashboard.putBoolean("HasTarget", hasTarget);
     // SmartDashboard.putBoolean("Running", VisionTurn.isRunning);
 
-    SmartDashboard.putNumber("Yaw", RobotContainer.getAHRS().getYaw());
-    SmartDashboard.putNumber("Left", RobotContainer.getElevator().getLeftEnc().getDistance());
-    SmartDashboard.putNumber("Right", RobotContainer.getElevator().getRightEnc().getDistance());
-    SmartDashboard.putNumber("Shooter Top Enc Rate", RobotContainer.getShooter().getTopEnc().getRate()*(60.0/1024.0));
-    SmartDashboard.putNumber("Shooter Bottom Enc Rate", RobotContainer.getShooter().getBottomEnc().getRate()*(60.0/1024.0));
-    SmartDashboard.putNumber("drive train yes yes yes", RobotContainer.getJoy().getY());
-    SmartDashboard.putNumber("drive train yes yes yes yes", RobotContainer.getJoy().getAxisCount());
+    //SmartDashboard.putNumber("Yaw", RobotContainer.getAHRS().getYaw());
     SmartDashboard.putNumber("degrees", Math.abs(RobotContainer.getAHRS().getAngle() % 360));
     SmartDashboard.putBoolean("12btn", RobotContainer.getJoy().getRawButton(12));
+    SmartDashboard.putNumber("dial", RobotContainer.getJoy().getRawAxis(3));
+    SmartDashboard.putNumber("dial_output", RobotContainer.turn_deg);
+    SmartDashboard.putNumber("dial_output", turn_rbt_deg);
   }
 
   /**
@@ -212,6 +210,8 @@ public class Robot extends TimedRobot
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    
 
     RobotContainer.getAHRS().reset();
   }

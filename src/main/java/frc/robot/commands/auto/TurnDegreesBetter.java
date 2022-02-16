@@ -8,35 +8,28 @@ import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
-public class TurnDegrees extends CommandBase{
+public class TurnDegreesBetter extends CommandBase{
 
     private DriveTrain driveTrain = RobotContainer.getDriveTrain();
-    private double err;
-    private double err_ttl;
-    private double errBasedSpd;
     private double degrees;
-    private double post_degrees;
-    private double cdegrees;
     private double degreesf;
+    private double cdegrees;
+    private double err;
+    private boolean isCW;
     private double speed;
-    private int count;
 
-    public TurnDegrees(double degreesf) {
+    public TurnDegreesBetter(double degreesf, boolean isCW) {
         addRequirements(RobotContainer.getDriveTrain());
         this.degreesf = degreesf;
+        this.isCW = isCW;
     }
 
     @Override
     public void initialize()
     {
         degrees = Robot.turn_rbt_deg;
-
         RobotContainer.getAHRS().reset();
-        if (degrees > 180) {
-            post_degrees = degrees - 180;
-        } else {
-            post_degrees = degrees;
-        }
+
     }
   
     @Override
@@ -44,10 +37,7 @@ public class TurnDegrees extends CommandBase{
     {
         cdegrees = Math.abs(RobotContainer.getAHRS().getAngle());
 
-
-
-        err = post_degrees - cdegrees;
-        err_ttl = degrees - cdegrees;
+        err = degrees - cdegrees;
         
         if(Math.abs(err) > 25){
             speed = .5;
@@ -56,13 +46,13 @@ public class TurnDegrees extends CommandBase{
             speed = .15;
         }
 
-        if(degrees > 180){
-            speed *= -1;
+        if (isCW) {
+            driveTrain.getLeft().set(-speed);
+            driveTrain.getRight().set(speed);
+        } else if (!isCW) {
+            driveTrain.getLeft().set(speed);
+            driveTrain.getRight().set(-speed);
         }
-
-        driveTrain.getLeft().set(-speed);
-        driveTrain.getRight().set(speed);
-
 
     }
   
@@ -79,7 +69,7 @@ public class TurnDegrees extends CommandBase{
     @Override
     public boolean isFinished()
     {
-        if(Math.abs(RobotContainer.getAHRS().getAngle() % 360) >= (post_degrees - 2) && Math.abs(RobotContainer.getAHRS().getAngle() % 360) <= (post_degrees + 2)) 
+        if(Math.abs(RobotContainer.getAHRS().getAngle() % 360) >= (degrees - 2) && Math.abs(RobotContainer.getAHRS().getAngle() % 360) <= (degrees + 2)) 
         {    
  
             return true;

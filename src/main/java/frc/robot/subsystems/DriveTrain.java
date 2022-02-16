@@ -146,7 +146,7 @@ public class DriveTrain extends SubsystemBase
 
     public void takeJoystickInputs(Joystick joy)
     {
-        driveBase.arcadeDrive(joy.getY(), -joy.getZ() * 0.85);
+        driveBase.arcadeDrive(joy.getY(), -joy.getZ() * 0.65);
         SmartDashboard.putNumber("drive train yes yes", joy.getY());
 
     }

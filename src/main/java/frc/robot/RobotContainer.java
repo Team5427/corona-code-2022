@@ -43,6 +43,7 @@ import frc.robot.commands.auto.PointTurn;
 import frc.robot.commands.auto.RapidReactAuton;
 import frc.robot.commands.auto.RapidReactNoVision;
 import frc.robot.commands.auto.TurnDegrees;
+import frc.robot.commands.auto.TurnDegreesBetter;
 import frc.robot.commands.auto.moveStraight;
 import frc.robot.commands.ShootAll;
 import frc.robot.commands.VisionMove;
@@ -129,6 +130,8 @@ public class RobotContainer
   //camera
   public static CameraServer server;
   public static UsbCamera cam;
+
+  public static double turn_deg;
   
 
   /**
@@ -219,8 +222,8 @@ public class RobotContainer
     //shootAll = new JoystickButton(joy, Constants.SHOOT_ALL_BUTTON);
     moveElevatorUp = new JoystickButton(joy, Constants.ELEVATOR_UP_BUTTON);
     moveElevatorDown = new JoystickButton(joy, Constants.ELEVATOR_DOWN_BUTTON);
-    visionbtn = new JoystickButton(joy, Constants.VISION_BTN);
-    visionbtn2 = new JoystickButton(joy, Constants.VISION_BTN2);
+    visionbtn = new JoystickButton(joy, Constants.VISION_BTN2);
+    visionbtn2 = new JoystickButton(joy, Constants.VISION_BTN);
   
 
     intakeButton.whileHeld(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
@@ -233,7 +236,7 @@ public class RobotContainer
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     visionbtn.whenPressed(new RapidReactAuton());
-    visionbtn2.whenPressed(new TurnDegrees(62));
+    visionbtn2.whenPressed(new TurnDegreesBetter(turn_deg, false));
 
   }
 

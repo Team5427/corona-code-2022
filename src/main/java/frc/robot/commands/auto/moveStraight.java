@@ -63,7 +63,7 @@ public class moveStraight extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Robot.pitch <= 4 && (Robot.yaw >= -3 || Robot.yaw <= 3) ) {
+        if (Robot.pitch <= 0 && (Robot.yaw >= -3 || Robot.yaw <= 3) ) {
             return true;
         }
         return false;

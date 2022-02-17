@@ -7,25 +7,11 @@
 
 package frc.robot;
 
-
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
-import edu.wpi.first.wpilibj2.command.button.Button;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.LIDAR;
+import edu.wpi.first.wpilibj.I2C;
 //import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.commands.MoveShooterTeleop;
-import frc.robot.commands.auto.AethiaCenterThreeCells;
-import frc.robot.subsystems.Shooter;
 
 
 
@@ -40,28 +26,7 @@ public class RobotContainer
   // The robot's subsystems and commands are defined here...
 
   //numbers
-
-  //joystick
-  private static Joystick joy;
-  private static Button shooterTeleop;
-
-  private static Ultrasonic ultra;
-
-  //motors 
-  public static CANSparkMax shooterMotorTop;
-  public static CANSparkMax shooterMotorBottom;
-
-  //sensors
-  private static RelativeEncoder shooterTopEnc;
-  private static RelativeEncoder shooterBottomEnc;
-
-  //subsystems
-  private static Shooter shooter;
-
-  private static SparkMaxPIDController pidcontrol_shooter_top;
-  private static SparkMaxPIDController pidcontrol_shooter_btm;
-
-  public static PowerDistribution pdp;
+  private static LIDAR lidar;
 
 
   //camera
@@ -72,31 +37,8 @@ public class RobotContainer
    */
   public RobotContainer() 
   {
+    lidar = new LIDAR(I2C.Port.kOnboard, 0x62);
 
-    shooterMotorTop = new CANSparkMax(Constants.SHOOTER_MOTOR_TOP, MotorType.kBrushless);
-    shooterMotorBottom = new CANSparkMax(Constants.SHOOTER_MOTOR_BOTTOM, MotorType.kBrushless);
-
-    pidcontrol_shooter_top = shooterMotorTop.getPIDController();
-    pidcontrol_shooter_btm = shooterMotorBottom.getPIDController();
-    // Configure the button bindings
-
-    shooterTopEnc = shooterMotorTop.getEncoder();
-    shooterBottomEnc = shooterMotorBottom.getEncoder();
-
-    pdp = new PowerDistribution(0, ModuleType.kCTRE);
-
-    ultra = new Ultrasonic(Constants.ULTRA_PORT_1, Constants.ULTRA_PORT_2);
-    ultra.setAutomaticMode(true);
-
-
-    
-
-    shooterMotorBottom.setInverted(false);
-
-    
-    shooterMotorTop.setInverted(true);
-
-    shooter = new Shooter(shooterMotorTop, shooterMotorBottom, shooterTopEnc, shooterBottomEnc, pidcontrol_shooter_top, pidcontrol_shooter_btm);
     //shooter.setDefaultCommand(new MoveShooterTeleop(Constants.SHOOTER_TELEOP_SPEED));
 
 
@@ -112,10 +54,7 @@ public class RobotContainer
    */
   private void configureButtonBindings() 
   {
-    joy = new Joystick(0);
-    shooterTeleop = new JoystickButton(joy, Constants.SHOOTER_TELEOP);
-
-    shooterTeleop.whileHeld(new MoveShooterTeleop(Constants.SHOOTER_TELEOP_SPEED));
+    //joy = new Joystick(0);
   }
 
   /**
@@ -125,10 +64,8 @@ public class RobotContainer
    */
   public static Command getAutonomousCommand() 
   {
-    return new AethiaCenterThreeCells();
+    return null;
   }
-  public static Shooter getShooter(){return shooter;}
-  public static Joystick getJoy(){return joy;}
-  public static Ultrasonic getUltrasonic(){return ultra;}
+  public static LIDAR getLIDAR(){return lidar;}
   
 }

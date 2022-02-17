@@ -12,12 +12,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.IncreaseRPM;
-//import frc.robot.commands.auto.AethiaLeftThreeCells;
-//import frc.robot.subsystems.DriveTrain;
-import frc.robot.commands.MoveShooterTeleop;
-import frc.robot.commands.DecreaseRPM;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -43,8 +37,6 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Change RPM", 4560);
 
     m_robotContainer = new RobotContainer();
-    SmartDashboard.putData("IncreaseRPM", new IncreaseRPM());
-    SmartDashboard.putData("DecreaseRPM", new DecreaseRPM());
     
   }
 
@@ -63,14 +55,10 @@ public class Robot extends TimedRobot
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
 
-    SmartDashboard.putNumber("left RPM", RobotContainer.getShooter().getBottomEnc().getVelocity());
-    SmartDashboard.putNumber("right RPM", RobotContainer.getShooter().getTopEnc().getVelocity());
-    SmartDashboard.putNumber("Voltage?", 1/RobotContainer.shooterMotorTop.getBusVoltage());
-    SmartDashboard.putNumber("Power?", RobotContainer.pdp.getCurrent(12));
-
-    SmartDashboard.putNumber("SetPoint", RobotContainer.getShooter().setPoint);
     //System.out.println(RobotContainer.getShooter().setPoint);
 
+    SmartDashboard.putNumber("LIDAR Distance I2C", RobotContainer.getLIDAR().getDistance()/2.54);
+    SmartDashboard.putNumber("LIDAR INT", RobotContainer.getLIDAR().getDistance()/2.54);
 
     // Shuffleboard.getTab("SmartDashboard").add("Test Button", new DecreaseRPM()).withWidget(BuiltInWidgets.kCommand);
 
@@ -141,10 +129,6 @@ public class Robot extends TimedRobot
       // SmartDashboard.putNumber("Shooter Bottom Enc RPM", RobotContainer.getShooter().getBottomEnc().getVelocity());
       // SmartDashboard.putNumber("Final_Setpoint", MoveShooterTeleop.setPointFinal);
       // SmartDashboard.putNumber("Current_Setpoint_Top", MoveShooterTeleop. lsetPoint);
-      // SmartDashboard.putNumber("Current_Setpoint_Btm", MoveShooterTeleop. rsetPoint);
-      RangeIn = RobotContainer.getUltrasonic().getRangeInches();
-      SmartDashboard.putNumber("Ultrasonic Range (in)", RangeIn);
-      SmartDashboard.putNumber("Ultrasonic Range (ft)", RangeIn/12);
 
 
 

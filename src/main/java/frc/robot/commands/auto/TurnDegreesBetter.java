@@ -16,18 +16,25 @@ public class TurnDegreesBetter extends CommandBase{
     private double cdegrees;
     private double err;
     private boolean isCW;
+    private boolean isAuto;
     private double speed;
 
-    public TurnDegreesBetter(double degreesf, boolean isCW) {
+    public TurnDegreesBetter(double degreesf, boolean isCW, boolean isAuto) {
         addRequirements(RobotContainer.getDriveTrain());
         this.degreesf = degreesf;
         this.isCW = isCW;
+        this.isAuto = isAuto;
     }
 
     @Override
     public void initialize()
     {
-        degrees = Robot.turn_rbt_deg;
+        if (isAuto) {
+            degrees = degreesf;
+        } else if (!isAuto) {
+            degrees = Robot.turn_rbt_deg;
+        }
+        
         RobotContainer.getAHRS().reset();
 
     }

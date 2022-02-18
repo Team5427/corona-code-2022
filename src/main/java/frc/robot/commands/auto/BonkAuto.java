@@ -26,6 +26,7 @@ public class BonkAuto extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("bonk happened");
         timer.reset();
         timer.start();
     }

@@ -17,8 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveTransport;
-import frc.robot.commands.VisionTurn;
-import frc.robot.commands.auto.AethiaLeftThreeCells;
+import frc.robot.commands.auto.VisionTurn;
 import frc.robot.subsystems.DriveTrain;
 
 
@@ -32,8 +31,8 @@ public class Robot extends TimedRobot
 {
   private Command m_autonomousCommand;
   
-  // NetworkTable table;
-  PhotonCamera ballCamera = new PhotonCamera("photoncam2");
+  NetworkTable table;
+  PhotonCamera ballCamera;
   PhotonTrackedTarget ballTarget;
   
   public static double pitch;
@@ -44,7 +43,7 @@ public class Robot extends TimedRobot
   public static double PixelY;
   public static boolean hasTarget;
 
-  // NetworkTable table2;
+  NetworkTable table2;
   public PhotonCamera targetCamera;
   public PhotonTrackedTarget targetTarget;
   
@@ -58,6 +57,8 @@ public class Robot extends TimedRobot
   double default_all = 0.0;
 
   private RobotContainer m_robotContainer;
+
+  public static double turn_rbt_deg;
   
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -108,8 +109,23 @@ public class Robot extends TimedRobot
       CommandScheduler.getInstance().schedule(new MoveTransport(0.5));
     }
 
+    // hasTarget = table.getEntry("hasTarget").getBoolean(true);
+    // pitch = table.getEntry("targetPitch").getDouble(default_all);
+    // yaw = table.getEntry("targetYaw").getDouble(default_all);
+    // skew = table.getEntry("targetSkew").getDouble(default_all);
+    // area = table.getEntry("targetArea").getDouble(default_all);
+    // PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
+    // PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
 
-    SmartDashboard.putBoolean("has ball taret", hasTarget);
+    // hasTarget2 = table2.getEntry("hasTarget").getBoolean(true);
+    // pitch2 = table2.getEntry("targetPitch").getDouble(default_all);
+    // yaw2 = table2.getEntry("targetYaw").getDouble(default_all);
+    // skew2 = table2.getEntry("targetSkew").getDouble(default_all);
+    // area2 = table2.getEntry("targetArea").getDouble(default_all);
+    // PixelX2 = table2.getEntry("targetPixelsX").getDouble(default_all);
+    // PixelY2 = table2.getEntry("targetPixelsY").getDouble(default_all);
+
+    turn_rbt_deg = ((RobotContainer.getJoy().getRawAxis(3) * 180) + 180);
 
     if(ballCamera.getLatestResult().hasTargets()){
       hasTarget = ballCamera.getLatestResult().hasTargets();
@@ -119,10 +135,10 @@ public class Robot extends TimedRobot
       skew = ballTarget.getSkew();
       area = ballTarget.getArea();
     }
-    // PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
-    // PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
+    //PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
+    //PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
 
-    hasTarget2 = targetCamera.getLatestResult().hasTargets();
+    //hasTarget2 = targetCamera.getLatestResult().hasTargets();
 
     if(targetCamera.getLatestResult().hasTargets()){
       hasTarget2 = targetCamera.getLatestResult().hasTargets();
@@ -133,23 +149,19 @@ public class Robot extends TimedRobot
       area2 = targetTarget.getArea();
     }
 
-
-
-    SmartDashboard.putBoolean("Intake Covered", RobotContainer.getTransport().getIntakeCovered());
-    SmartDashboard.putBoolean("Transport covered", RobotContainer.getTransport().getTransportCovered());
-    SmartDashboard.putBoolean("Pulley Covered", RobotContainer.getPulley().getPulleyCovered());
     SmartDashboard.putBoolean("HasTarget", hasTarget);
     // SmartDashboard.putBoolean("Running", VisionTurn.isRunning);
 
-    SmartDashboard.putNumber("Yaw", RobotContainer.getAHRS().getYaw());
-    SmartDashboard.putNumber("Left", RobotContainer.getElevator().getLeftEnc().getDistance());
-    SmartDashboard.putNumber("Right", RobotContainer.getElevator().getRightEnc().getDistance());
-    SmartDashboard.putNumber("Shooter Top Enc Rate", RobotContainer.getShooter().getTopEnc().getRate()*(60.0/1024.0));
-    SmartDashboard.putNumber("Shooter Bottom Enc Rate", RobotContainer.getShooter().getBottomEnc().getRate()*(60.0/1024.0));
-    SmartDashboard.putNumber("drive train yes yes yes", RobotContainer.getJoy().getY());
-    SmartDashboard.putNumber("drive train yes yes yes yes", RobotContainer.getJoy().getAxisCount());
-    SmartDashboard.putNumber("degrees", Math.abs(RobotContainer.getAHRS().getAngle() % 360));
+    //SmartDashboard.putNumber("Yaw", RobotContainer.getAHRS().getYaw());
+    SmartDashboard.putNumber("degrees", Math.abs((RobotContainer.getAHRS().getAngle() < 0)? 360 - Math.abs(RobotContainer.getAHRS().getAngle() % 360): Math.abs(RobotContainer.getAHRS().getAngle() % 360)));
+    SmartDashboard.putNumber("angle", RobotContainer.getAHRS().getAngle());
+
     SmartDashboard.putBoolean("12btn", RobotContainer.getJoy().getRawButton(12));
+    SmartDashboard.putBoolean("5btn", RobotContainer.getJoy().getRawButton(5));
+
+    SmartDashboard.putNumber("dial", RobotContainer.getJoy().getRawAxis(3));
+    SmartDashboard.putNumber("dial_output", RobotContainer.turn_deg);
+    SmartDashboard.putNumber("dial_output", turn_rbt_deg);
   }
 
   /**
@@ -201,6 +213,8 @@ public class Robot extends TimedRobot
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    
 
     RobotContainer.getAHRS().reset();
   }

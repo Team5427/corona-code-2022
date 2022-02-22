@@ -1,12 +1,8 @@
 package frc.robot.commands.auto;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
-import pabeles.concurrency.ConcurrencyOps.Reset;
 
 public class ForwardTimer extends CommandBase {
 
@@ -14,11 +10,7 @@ public class ForwardTimer extends CommandBase {
     private Timer timer = new Timer();
     private double ctimer;
     private double speed;
-    /**
-     * Creates a new MoveStraight.
-     */
-  
-    //bias based on distance model in case it is needed
+    
     public ForwardTimer(double ctimer, double speed)
     {
       addRequirements(RobotContainer.getDriveTrain());

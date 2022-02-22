@@ -15,12 +15,17 @@ public class TurningIsCool extends CommandBase{
     private boolean isAuto;
     private double startAngle;
     private boolean reset = false;
+    private double slowSpeed;
+    private double fastSpeed;
+    private double slowDist;
 
-    public TurningIsCool(double setPoint, boolean isAuto) {
+    public TurningIsCool(double setPoint, boolean isAuto, double slowSpeed, double fastSpeed, double slowDist) {
         addRequirements(RobotContainer.getDriveTrain());
-
         this.setPoint = setPoint;
         this.isAuto = isAuto;
+        this.slowSpeed = slowSpeed;
+        this.fastSpeed = fastSpeed;
+        this.slowDist = slowDist;
     }
 
     @Override
@@ -41,11 +46,11 @@ public class TurningIsCool extends CommandBase{
         double angle = Math.abs((RobotContainer.getAHRS().getAngle() < 0)? 360 - Math.abs(RobotContainer.getAHRS().getAngle() % 360): Math.abs(RobotContainer.getAHRS().getAngle() % 360));
         double speed;
 
-        if(Math.abs(angle - setPoint) < 20) {
-            speed = .15;
+        if(Math.abs(angle - setPoint) < slowDist) {
+            speed = slowSpeed;
         } 
         else{
-            speed = .5;
+            speed = fastSpeed;
         }
 
         if(setPoint > 180){

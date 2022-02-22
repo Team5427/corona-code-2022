@@ -14,15 +14,15 @@ public class VisionBall extends CommandBase {
 
     private DriveTrain driveTrain = RobotContainer.getDriveTrain();
 
-    double bias = 0;
-    double slowSpeed;
-    double fastSpeed;
+    private double bias = 0;
+    private double slowSpeed;
+    private double fastSpeed;
     private double err;
-    double setSpeedLeft;
-    double setSpeedRight;
-    boolean locked;
+    private double setSpeedLeft;
+    private double setSpeedRight;
+    private boolean locked;
 
-    double timer = 0;
+    private double timer = 0;
 
     private PhotonCamera cam;
     private PhotonTrackedTarget target;

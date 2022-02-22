@@ -8,20 +8,22 @@ import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
 import pabeles.concurrency.ConcurrencyOps.Reset;
 
-public class BonkAuto extends CommandBase {
+public class ForwardTimer extends CommandBase {
 
     private DriveTrain driveTrain = RobotContainer.getDriveTrain();
     private Timer timer = new Timer();
     private double ctimer;
+    private double speed;
     /**
      * Creates a new MoveStraight.
      */
   
     //bias based on distance model in case it is needed
-    public BonkAuto(double ctimer)
+    public ForwardTimer(double ctimer, double speed)
     {
       addRequirements(RobotContainer.getDriveTrain());
       this.ctimer = ctimer;
+      this.speed = speed;
     }
 
     @Override
@@ -32,8 +34,8 @@ public class BonkAuto extends CommandBase {
 
     @Override
     public void execute() {
-        driveTrain.getLeft().set(-0.3);
-        driveTrain.getRight().set(-0.3);
+        driveTrain.getLeft().set(-speed);
+        driveTrain.getRight().set(-speed);
     }
 
     @Override

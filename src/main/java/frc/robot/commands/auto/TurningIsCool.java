@@ -45,7 +45,7 @@ public class TurningIsCool extends CommandBase{
             speed = .15;
         } 
         else{
-            speed = .3;
+            speed = .5;
         }
 
         if(setPoint > 180){

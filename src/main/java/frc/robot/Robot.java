@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveTransport;
 import frc.robot.commands.VisionTurn;
-import frc.robot.commands.auto.AethiaLeftThreeCells;
 import frc.robot.subsystems.DriveTrain;
 
 

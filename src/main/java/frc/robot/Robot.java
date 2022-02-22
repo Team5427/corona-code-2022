@@ -33,8 +33,8 @@ public class Robot extends TimedRobot
   private Command m_autonomousCommand;
   
   NetworkTable table;
-  // PhotonCamera ballCamera;
-  // PhotonTrackedTarget ballTarget;
+  PhotonCamera ballCamera;
+  PhotonTrackedTarget ballTarget;
   
   public static double pitch;
   public static double yaw;
@@ -45,8 +45,8 @@ public class Robot extends TimedRobot
   public static boolean hasTarget;
 
   NetworkTable table2;
-  // public PhotonCamera targetCamera;
-  // public PhotonTrackedTarget targetTarget;
+  public PhotonCamera targetCamera;
+  public PhotonTrackedTarget targetTarget;
   
   public static double pitch2;
   public static double yaw2;
@@ -73,19 +73,19 @@ public class Robot extends TimedRobot
     DriveTrain.leftSpeed = 0;
     DriveTrain.rightSpeed = 0;
     
-    // ballCamera = new PhotonCamera("photoncam2");
+    ballCamera = new PhotonCamera("photoncam2");
 
-    NetworkTableInstance PIInstance = NetworkTableInstance.create();
-    PIInstance.setServer("ballvision");
-    PIInstance.startClient();
-    table = PIInstance.getTable("photonvision").getSubTable("photoncam2");
+    // NetworkTableInstance PIInstance = NetworkTableInstance.create();
+    // PIInstance.setServer("ballvision");
+    // PIInstance.startClient();
+    // table = PIInstance.getTable("photonvision").getSubTable("photoncam2");
 
-    // targetCamera = new PhotonCamera("photoncam");
+    targetCamera = new PhotonCamera("photoncam");
 
-    NetworkTableInstance PIInstance2 = NetworkTableInstance.create();
-    PIInstance2.setServer("targetvision");
-    PIInstance2.startClient();
-    table2 = PIInstance2.getTable("photonvision").getSubTable("photoncam");
+    // NetworkTableInstance PIInstance2 = NetworkTableInstance.create();
+    // PIInstance2.setServer("targetvision");
+    // PIInstance2.startClient();
+    // table2 = PIInstance2.getTable("photonvision").getSubTable("photoncam");
 
   }
 
@@ -110,45 +110,45 @@ public class Robot extends TimedRobot
       CommandScheduler.getInstance().schedule(new MoveTransport(0.5));
     }
 
-    hasTarget = table.getEntry("hasTarget").getBoolean(true);
-    pitch = table.getEntry("targetPitch").getDouble(default_all);
-    yaw = table.getEntry("targetYaw").getDouble(default_all);
-    skew = table.getEntry("targetSkew").getDouble(default_all);
-    area = table.getEntry("targetArea").getDouble(default_all);
-    PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
-    PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
-
-    hasTarget2 = table2.getEntry("hasTarget").getBoolean(true);
-    pitch2 = table2.getEntry("targetPitch").getDouble(default_all);
-    yaw2 = table2.getEntry("targetYaw").getDouble(default_all);
-    skew2 = table2.getEntry("targetSkew").getDouble(default_all);
-    area2 = table2.getEntry("targetArea").getDouble(default_all);
-    PixelX2 = table2.getEntry("targetPixelsX").getDouble(default_all);
-    PixelY2 = table2.getEntry("targetPixelsY").getDouble(default_all);
-
-    turn_rbt_deg = ((RobotContainer.getJoy().getRawAxis(3) * 180) + 180);
-
-    // if(ballCamera.getLatestResult().hasTargets()){
-    //   hasTarget = ballCamera.getLatestResult().hasTargets();
-    //   ballTarget = ballCamera.getLatestResult().getBestTarget();
-    //   pitch = ballTarget.getPitch();
-    //   yaw = ballTarget.getYaw();
-    //   skew = ballTarget.getSkew();
-    //   area = ballTarget.getArea();
-    // }
+    // hasTarget = table.getEntry("hasTarget").getBoolean(true);
+    // pitch = table.getEntry("targetPitch").getDouble(default_all);
+    // yaw = table.getEntry("targetYaw").getDouble(default_all);
+    // skew = table.getEntry("targetSkew").getDouble(default_all);
+    // area = table.getEntry("targetArea").getDouble(default_all);
     // PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
     // PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
 
-    // hasTarget2 = targetCamera.getLatestResult().hasTargets();
+    // hasTarget2 = table2.getEntry("hasTarget").getBoolean(true);
+    // pitch2 = table2.getEntry("targetPitch").getDouble(default_all);
+    // yaw2 = table2.getEntry("targetYaw").getDouble(default_all);
+    // skew2 = table2.getEntry("targetSkew").getDouble(default_all);
+    // area2 = table2.getEntry("targetArea").getDouble(default_all);
+    // PixelX2 = table2.getEntry("targetPixelsX").getDouble(default_all);
+    // PixelY2 = table2.getEntry("targetPixelsY").getDouble(default_all);
 
-    // if(targetCamera.getLatestResult().hasTargets()){
-    //   hasTarget2 = targetCamera.getLatestResult().hasTargets();
-    //   targetTarget = targetCamera.getLatestResult().getBestTarget();
-    //   pitch2 = targetTarget.getPitch();
-    //   yaw2 = targetTarget.getYaw();
-    //   skew2 = targetTarget.getSkew();
-    //   area2 = targetTarget.getArea();
-    // }
+    turn_rbt_deg = ((RobotContainer.getJoy().getRawAxis(3) * 180) + 180);
+
+    if(ballCamera.getLatestResult().hasTargets()){
+      hasTarget = ballCamera.getLatestResult().hasTargets();
+      ballTarget = ballCamera.getLatestResult().getBestTarget();
+      pitch = ballTarget.getPitch();
+      yaw = ballTarget.getYaw();
+      skew = ballTarget.getSkew();
+      area = ballTarget.getArea();
+    }
+    PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
+    PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
+
+    hasTarget2 = targetCamera.getLatestResult().hasTargets();
+
+    if(targetCamera.getLatestResult().hasTargets()){
+      hasTarget2 = targetCamera.getLatestResult().hasTargets();
+      targetTarget = targetCamera.getLatestResult().getBestTarget();
+      pitch2 = targetTarget.getPitch();
+      yaw2 = targetTarget.getYaw();
+      skew2 = targetTarget.getSkew();
+      area2 = targetTarget.getArea();
+    }
 
     SmartDashboard.putBoolean("HasTarget", hasTarget);
     // SmartDashboard.putBoolean("Running", VisionTurn.isRunning);

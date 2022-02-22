@@ -55,17 +55,23 @@ public class VisionTurn extends CommandBase
       driveTrain.getLeft().set(0.4);    
     } else {
       if(Robot.yaw2 >= 20){
-        driveTrain.getRight().set(0.3);
-        driveTrain.getLeft().set(-0.3);      }
-      else if(Robot.yaw2 > 1){
+        driveTrain.getRight().set(0.25);
+        driveTrain.getLeft().set(-0.25);      
+      } else if (Robot.yaw2 >= 6) {
         driveTrain.getRight().set(0.15);
-        driveTrain.getLeft().set(-0.15);      }
-      else if(Robot.yaw2 <= -20){
-        driveTrain.getRight().set(-0.3);
-        driveTrain.getLeft().set(0.3);      }
-      else if(Robot.yaw2 < -1){
+        driveTrain.getLeft().set(-0.15); 
+      } else if(Robot.yaw2 > 1){
+        driveTrain.getRight().set(0.12);
+        driveTrain.getLeft().set(-0.12);      
+      } else if(Robot.yaw2 <= -20){
+        driveTrain.getRight().set(-0.25);
+        driveTrain.getLeft().set(0.25);      
+      } else if (Robot.yaw2 <= -6) {
         driveTrain.getRight().set(-0.15);
-        driveTrain.getLeft().set(0.15);
+        driveTrain.getLeft().set(0.15);    
+      } else if(Robot.yaw2 < -1){
+        driveTrain.getRight().set(-0.12);
+        driveTrain.getLeft().set(0.12);
 
       } 
     }
@@ -87,10 +93,10 @@ public class VisionTurn extends CommandBase
   @Override
   public boolean isFinished()
   {
-    if(Robot.yaw2 > -3 && Robot.yaw2 < 3 && Robot.hasTarget2) 
+    if(Robot.yaw2 > -2 && Robot.yaw2 < 2 && Robot.hasTarget2) 
     {
       counter++;
-      if(counter > 8){
+      if(counter > 12){
         return true;
       }
     }

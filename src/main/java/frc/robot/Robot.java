@@ -135,8 +135,8 @@ public class Robot extends TimedRobot
       skew = ballTarget.getSkew();
       area = ballTarget.getArea();
     }
-    PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
-    PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
+    // PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
+    // PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
 
     hasTarget2 = targetCamera.getLatestResult().hasTargets();
 

@@ -5,7 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.auto;
+import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.Robot;
@@ -17,9 +20,13 @@ public class VisionTurn extends CommandBase
   private DriveTrain driveTrain = RobotContainer.getDriveTrain();
 
   double bias = 0;
+  private boolean hasTarget;
+  private double err;
   public static boolean isRunning;
   public static int counter;
   public static boolean isCW;
+  private PhotonCamera cam;
+  private PhotonTrackedTarget target;
   /**
    * Creates a new MoveStraight.
    */
@@ -38,40 +45,47 @@ public class VisionTurn extends CommandBase
   @Override
   public void initialize()
   {
+    cam = new PhotonCamera("photoncam");
     isRunning = true;
     counter = 0;
+    hasTarget = false;
   }
 
   @Override
   public void execute()
   {
 
+    if(cam.getLatestResult().hasTargets()){
+      hasTarget = cam.getLatestResult().hasTargets();
+      target = cam.getLatestResult().getBestTarget();
+      err = target.getYaw();
+    }
 
-    if(!Robot.hasTarget2 && isCW){
+    if(!hasTarget && isCW){
       driveTrain.getRight().set(0.4);
       driveTrain.getLeft().set(-0.4);     
-    } else if (!Robot.hasTarget2 && !isCW) {
+    } else if (!hasTarget && !isCW) {
       driveTrain.getRight().set(-0.4);
       driveTrain.getLeft().set(0.4);    
     } else {
-      if(Robot.yaw2 >= 20){
+      if(err >= 20){
         driveTrain.getRight().set(0.25);
         driveTrain.getLeft().set(-0.25);      
-      } else if (Robot.yaw2 >= 6) {
+      } else if (err >= 6) {
         driveTrain.getRight().set(0.15);
         driveTrain.getLeft().set(-0.15); 
-      } else if(Robot.yaw2 > 1){
-        driveTrain.getRight().set(0.12);
-        driveTrain.getLeft().set(-0.12);      
-      } else if(Robot.yaw2 <= -20){
+      } else if(err > 1){
+        driveTrain.getRight().set(0.13);
+        driveTrain.getLeft().set(-0.13);      
+      } else if(err <= -20){
         driveTrain.getRight().set(-0.25);
         driveTrain.getLeft().set(0.25);      
-      } else if (Robot.yaw2 <= -6) {
+      } else if (err <= -6) {
         driveTrain.getRight().set(-0.15);
         driveTrain.getLeft().set(0.15);    
-      } else if(Robot.yaw2 < -1){
-        driveTrain.getRight().set(-0.12);
-        driveTrain.getLeft().set(0.12);
+      } else if(err < -1){
+        driveTrain.getRight().set(-0.13);
+        driveTrain.getLeft().set(0.13);
 
       } 
     }
@@ -93,7 +107,7 @@ public class VisionTurn extends CommandBase
   @Override
   public boolean isFinished()
   {
-    if(Robot.yaw2 > -2 && Robot.yaw2 < 2 && Robot.hasTarget2) 
+    if(err > -2 && err < 2 && hasTarget) 
     {
       counter++;
       if(counter > 12){

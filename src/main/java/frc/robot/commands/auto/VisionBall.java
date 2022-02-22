@@ -1,4 +1,7 @@
 package frc.robot.commands.auto;
+import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -7,25 +10,30 @@ import frc.robot.RobotContainer;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
 
-public class moveStraight extends CommandBase {
+public class VisionBall extends CommandBase {
 
     private DriveTrain driveTrain = RobotContainer.getDriveTrain();
 
     double bias = 0;
     double slowSpeed;
     double fastSpeed;
-    double err;
+    private double err;
     double setSpeedLeft;
     double setSpeedRight;
     boolean locked;
 
     double timer = 0;
+
+    private PhotonCamera cam;
+    private PhotonTrackedTarget target;
+    private boolean hasTarget;
+    private double pitch;
     /**
      * Creates a new MoveStraight.
      */
   
     //bias based on distance model in case it is needed
-    public moveStraight(double bias, double slowSpeed, double fastSpeed)
+    public VisionBall(double bias, double slowSpeed, double fastSpeed)
     {
       addRequirements(RobotContainer.getDriveTrain());
       this.bias = bias;
@@ -36,13 +44,21 @@ public class moveStraight extends CommandBase {
     @Override
     public void initialize() {
         locked = false;
+        cam = new PhotonCamera("photoncam2");
     }
 
     @Override
     public void execute() {
-        err = Robot.yaw;
+
+        if(cam.getLatestResult().hasTargets()){
+            hasTarget = cam.getLatestResult().hasTargets();
+            target = cam.getLatestResult().getBestTarget();
+            err = target.getYaw();
+            pitch = target.getPitch();
+        }
+
         
-        if(!Robot.hasTarget){
+        if(!hasTarget){
             driveTrain.getRight().set(slowSpeed);
             driveTrain.getLeft().set(-slowSpeed);
         } else {
@@ -63,7 +79,7 @@ public class moveStraight extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Robot.pitch <= 0 && (Robot.yaw >= -3 || Robot.yaw <= 3) ) {
+        if (pitch <= 0 && (err >= -3 || err <= 3) ) {
             return true;
         }
         return false;

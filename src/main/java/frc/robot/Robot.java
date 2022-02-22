@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveTransport;
-import frc.robot.commands.VisionTurn;
+import frc.robot.commands.auto.VisionTurn;
 import frc.robot.subsystems.DriveTrain;
 
 
@@ -32,8 +32,6 @@ public class Robot extends TimedRobot
   private Command m_autonomousCommand;
   
   NetworkTable table;
-  PhotonCamera ballCamera;
-  PhotonTrackedTarget ballTarget;
   
   public static double pitch;
   public static double yaw;
@@ -44,8 +42,6 @@ public class Robot extends TimedRobot
   public static boolean hasTarget;
 
   NetworkTable table2;
-  public PhotonCamera targetCamera;
-  public PhotonTrackedTarget targetTarget;
   
   public static double pitch2;
   public static double yaw2;
@@ -71,15 +67,12 @@ public class Robot extends TimedRobot
     RobotContainer.getAHRS().reset();
     DriveTrain.leftSpeed = 0;
     DriveTrain.rightSpeed = 0;
-    
-    ballCamera = new PhotonCamera("photoncam2");
-
+  
     // NetworkTableInstance PIInstance = NetworkTableInstance.create();
     // PIInstance.setServer("ballvision");
     // PIInstance.startClient();
     // table = PIInstance.getTable("photonvision").getSubTable("photoncam2");
 
-    targetCamera = new PhotonCamera("photoncam");
 
     // NetworkTableInstance PIInstance2 = NetworkTableInstance.create();
     // PIInstance2.setServer("targetvision");
@@ -126,30 +119,8 @@ public class Robot extends TimedRobot
     // PixelY2 = table2.getEntry("targetPixelsY").getDouble(default_all);
 
     turn_rbt_deg = ((RobotContainer.getJoy().getRawAxis(3) * 180) + 180);
-
-    if(ballCamera.getLatestResult().hasTargets()){
-      hasTarget = ballCamera.getLatestResult().hasTargets();
-      ballTarget = ballCamera.getLatestResult().getBestTarget();
-      pitch = ballTarget.getPitch();
-      yaw = ballTarget.getYaw();
-      skew = ballTarget.getSkew();
-      area = ballTarget.getArea();
-    }
     // PixelX = table.getEntry("targetPixelsX").getDouble(default_all);
-    // PixelY = table.getEntry("targetPixelsY").getDouble(default_all);
 
-    hasTarget2 = targetCamera.getLatestResult().hasTargets();
-
-    if(targetCamera.getLatestResult().hasTargets()){
-      hasTarget2 = targetCamera.getLatestResult().hasTargets();
-      targetTarget = targetCamera.getLatestResult().getBestTarget();
-      pitch2 = targetTarget.getPitch();
-      yaw2 = targetTarget.getYaw();
-      skew2 = targetTarget.getSkew();
-      area2 = targetTarget.getArea();
-    }
-
-    SmartDashboard.putBoolean("HasTarget", hasTarget);
     // SmartDashboard.putBoolean("Running", VisionTurn.isRunning);
 
     //SmartDashboard.putNumber("Yaw", RobotContainer.getAHRS().getYaw());

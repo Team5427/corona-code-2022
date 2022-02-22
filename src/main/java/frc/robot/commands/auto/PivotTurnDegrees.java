@@ -4,32 +4,36 @@ import javax.crypto.spec.DHGenParameterSpec;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
-public class TurnDegreesBetter extends CommandBase{
+public class PivotTurnDegrees extends CommandBase{
 
     private DriveTrain driveTrain = RobotContainer.getDriveTrain();
-    private double degrees;
-    private double degreesf;
-    private double cdegrees;
     private double err;
-    private boolean isCW;
-    private double speed;
+    private double err_ttl;
+    private double errBasedSpd;
+    private double degrees;
+    private double post_degrees;
+    private double cdegrees;
+    private double left_speed;
+    private double right_speed;
+    private int count;
 
-    public TurnDegreesBetter(double degreesf, boolean isCW) {
+    public PivotTurnDegrees(double degrees) {
         addRequirements(RobotContainer.getDriveTrain());
-        this.degreesf = degreesf;
-        this.isCW = isCW;
+        this.degrees = degrees;
     }
 
     @Override
     public void initialize()
     {
-        degrees = Robot.turn_rbt_deg;
         RobotContainer.getAHRS().reset();
-
+        if (degrees > 180) {
+            post_degrees = degrees - 180;
+        } else {
+            post_degrees = degrees;
+        }
     }
   
     @Override
@@ -37,22 +41,31 @@ public class TurnDegreesBetter extends CommandBase{
     {
         cdegrees = Math.abs(RobotContainer.getAHRS().getAngle());
 
-        err = degrees - cdegrees;
+
+
+        err = post_degrees - cdegrees;
+        err_ttl = degrees - cdegrees;
         
         if(Math.abs(err) > 25){
-            speed = .5;
+            left_speed = .5;
+            right_speed = .5;
 
         } else {
-            speed = .15;
+            left_speed = .4;
+            right_speed = .4;
         }
 
-        if (isCW) {
-            driveTrain.getLeft().set(-speed);
-            driveTrain.getRight().set(speed);
-        } else if (!isCW) {
-            driveTrain.getLeft().set(speed);
-            driveTrain.getRight().set(-speed);
+        if(degrees > 180){
+            left_speed *= 0;
+            right_speed *= -1;
+        } else if (degrees < 180) {
+            left_speed *= 1;
+            right_speed *= 0;
         }
+
+        driveTrain.getLeft().set(-left_speed);
+        driveTrain.getRight().set(right_speed);
+
 
     }
   
@@ -69,7 +82,7 @@ public class TurnDegreesBetter extends CommandBase{
     @Override
     public boolean isFinished()
     {
-        if(Math.abs(RobotContainer.getAHRS().getAngle() % 360) >= (degrees - 2) && Math.abs(RobotContainer.getAHRS().getAngle() % 360) <= (degrees + 2)) 
+        if(Math.abs(RobotContainer.getAHRS().getAngle() % 360) >= (post_degrees - 2) && Math.abs(RobotContainer.getAHRS().getAngle() % 360) <= (post_degrees + 2)) 
         {    
  
             return true;

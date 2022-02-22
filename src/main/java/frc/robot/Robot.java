@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveTransport;
 import frc.robot.commands.VisionTurn;
+import frc.robot.commands.auto.AethiaLeftThreeCells;
 import frc.robot.subsystems.DriveTrain;
 
 
@@ -153,12 +154,8 @@ public class Robot extends TimedRobot
     // SmartDashboard.putBoolean("Running", VisionTurn.isRunning);
 
     //SmartDashboard.putNumber("Yaw", RobotContainer.getAHRS().getYaw());
-    SmartDashboard.putNumber("degrees", Math.abs((RobotContainer.getAHRS().getAngle() < 0)? 360 - Math.abs(RobotContainer.getAHRS().getAngle() % 360): Math.abs(RobotContainer.getAHRS().getAngle() % 360)));
-    SmartDashboard.putNumber("angle", RobotContainer.getAHRS().getAngle());
-
+    SmartDashboard.putNumber("degrees", Math.abs(RobotContainer.getAHRS().getAngle() % 360));
     SmartDashboard.putBoolean("12btn", RobotContainer.getJoy().getRawButton(12));
-    SmartDashboard.putBoolean("5btn", RobotContainer.getJoy().getRawButton(5));
-
     SmartDashboard.putNumber("dial", RobotContainer.getJoy().getRawAxis(3));
     SmartDashboard.putNumber("dial_output", RobotContainer.turn_deg);
     SmartDashboard.putNumber("dial_output", turn_rbt_deg);

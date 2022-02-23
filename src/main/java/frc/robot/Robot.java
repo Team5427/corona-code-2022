@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveTransport;
+import frc.robot.commands.auto.TurningIsCool;
 import frc.robot.commands.auto.VisionTurn;
 import frc.robot.subsystems.DriveTrain;
 
@@ -67,6 +68,7 @@ public class Robot extends TimedRobot
     RobotContainer.getAHRS().reset();
     DriveTrain.leftSpeed = 0;
     DriveTrain.rightSpeed = 0;
+    SmartDashboard.putData("Turning is cool", new TurningIsCool(220, true, 0.15, 0.5, 30));
   
     // NetworkTableInstance PIInstance = NetworkTableInstance.create();
     // PIInstance.setServer("ballvision");

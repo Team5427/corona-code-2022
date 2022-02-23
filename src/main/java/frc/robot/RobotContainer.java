@@ -35,6 +35,7 @@ import frc.robot.commands.MoveTiltAuto;
 import frc.robot.commands.auto.ForwardTimer;
 import frc.robot.commands.auto.RapidReactAuton;
 import frc.robot.commands.auto.TurnDegreesBetter;
+import frc.robot.commands.auto.TurningIsCool;
 import frc.robot.commands.auto.VisionBall;
 import frc.robot.commands.ShootAll;
 import frc.robot.commands.VisionMove;
@@ -227,7 +228,7 @@ public class RobotContainer
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     visionbtn.whenPressed(new RapidReactAuton());
-    visionbtn2.whenPressed(new VisionTurn(0, true));
+    visionbtn2.whenPressed(new VisionBall(0, 0.3, 0.4));
 
   }
 

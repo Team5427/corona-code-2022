@@ -44,6 +44,7 @@ public class VisionTurn extends CommandBase
   @Override
   public void initialize()
   {
+    System.out.println("tracking target");
     cam = new PhotonCamera("photoncam");
     isRunning = true;
     counter = 0;
@@ -69,22 +70,28 @@ public class VisionTurn extends CommandBase
     } else {
       if(err >= 20){
         driveTrain.getRight().set(0.25);
-        driveTrain.getLeft().set(-0.25);      
+        driveTrain.getLeft().set(-0.25);
       } else if (err >= 6) {
+        driveTrain.getRight().set(0.2);
+        driveTrain.getLeft().set(-0.2);
+      } else if (err >= 4) {
         driveTrain.getRight().set(0.15);
         driveTrain.getLeft().set(-0.15); 
       } else if(err > 1){
-        driveTrain.getRight().set(0.13);
-        driveTrain.getLeft().set(-0.13);      
+        driveTrain.getRight().set(0.1);
+        driveTrain.getLeft().set(-0.1);      
       } else if(err <= -20){
         driveTrain.getRight().set(-0.25);
-        driveTrain.getLeft().set(0.25);      
+        driveTrain.getLeft().set(0.25);
       } else if (err <= -6) {
+        driveTrain.getRight().set(-0.2);
+        driveTrain.getLeft().set(0.2);
+      } else if (err <= -4) {
         driveTrain.getRight().set(-0.15);
         driveTrain.getLeft().set(0.15);    
       } else if(err < -1){
-        driveTrain.getRight().set(-0.13);
-        driveTrain.getLeft().set(0.13);
+        driveTrain.getRight().set(-0.1);
+        driveTrain.getLeft().set(0.1);
 
       } 
     }

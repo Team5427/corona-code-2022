@@ -69,6 +69,7 @@ public class TurningIsCool extends CommandBase{
     @Override
     public void end(boolean interrupted)
     {
+        RobotContainer.getAHRS().reset();
         driveTrain.stop();
     }
   

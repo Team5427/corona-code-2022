@@ -45,6 +45,7 @@ public class VisionBall extends CommandBase {
     public void initialize() {
         locked = false;
         cam = new PhotonCamera("photoncam2");
+        System.out.println("tracking ball");
     }
 
     @Override
@@ -62,7 +63,6 @@ public class VisionBall extends CommandBase {
             driveTrain.getRight().set(slowSpeed);
             driveTrain.getLeft().set(-slowSpeed);
         } else {
-
             locked = true;
             if (err < -3) {
                 setSpeedLeft = -slowSpeed;
@@ -70,16 +70,20 @@ public class VisionBall extends CommandBase {
             } if (err > 3) {
                 setSpeedRight = -slowSpeed;
                 setSpeedLeft = -fastSpeed;
+            } else if (err <= 3 && err >= -3) {
+                setSpeedRight = -fastSpeed;
+                setSpeedLeft = -fastSpeed;
             }
             
             driveTrain.getLeft().set(setSpeedLeft);
             driveTrain.getRight().set(setSpeedRight);
         }
+
     }
 
     @Override
     public boolean isFinished() {
-        if (pitch <= 0 && (err >= -3 || err <= 3) ) {
+        if (pitch <= -9 && (err >= -3 || err <= 3) ) {
             return true;
         }
         return false;

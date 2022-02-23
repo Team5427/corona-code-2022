@@ -35,7 +35,7 @@ import frc.robot.commands.MoveTiltAuto;
 import frc.robot.commands.auto.ForwardTimer;
 import frc.robot.commands.auto.RapidReactAuton;
 import frc.robot.commands.auto.TurnDegreesBetter;
-import frc.robot.commands.auto.TurningIsCool;
+import frc.robot.commands.auto.PointTurn;
 import frc.robot.commands.auto.VisionBall;
 import frc.robot.commands.ShootAll;
 import frc.robot.commands.VisionMove;

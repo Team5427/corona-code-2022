@@ -1,25 +1,21 @@
 package frc.robot.commands.auto;
 
-import javax.crypto.spec.DHGenParameterSpec;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
-public class TurningIsCool extends CommandBase{
+public class PointTurn extends CommandBase{
 
     private DriveTrain driveTrain = RobotContainer.getDriveTrain();
     private double setPoint;
     private boolean isAuto;
-    private double startAngle;
     private boolean reset = false;
     private double slowSpeed;
     private double fastSpeed;
     private double slowDist;
 
-    public TurningIsCool(double setPoint, boolean isAuto, double slowSpeed, double fastSpeed, double slowDist) {
+    public PointTurn(double setPoint, boolean isAuto, double slowSpeed, double fastSpeed, double slowDist) {
         addRequirements(RobotContainer.getDriveTrain());
         this.setPoint = setPoint;
         this.isAuto = isAuto;

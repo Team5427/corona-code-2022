@@ -20,6 +20,7 @@ public class ForwardTimer extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("Started Moving Forward at " + (int)speed * 100 + "% for " + ctimer + "s");
         timer.reset();
         timer.start();
     }
@@ -40,6 +41,7 @@ public class ForwardTimer extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("Finished Moving Forward");
         driveTrain.stop();
     }
     

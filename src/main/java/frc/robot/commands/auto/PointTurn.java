@@ -27,6 +27,8 @@ public class PointTurn extends CommandBase{
     @Override
     public void initialize()
     {
+
+        System.out.println("Turn Started");
         RobotContainer.getAHRS().reset();
         reset = true;
         if (isAuto) {
@@ -65,6 +67,7 @@ public class PointTurn extends CommandBase{
     @Override
     public void end(boolean interrupted)
     {
+        System.out.println("Turn Finished");
         RobotContainer.getAHRS().reset();
         driveTrain.stop();
     }

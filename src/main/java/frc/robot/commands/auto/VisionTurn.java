@@ -44,7 +44,7 @@ public class VisionTurn extends CommandBase
   @Override
   public void initialize()
   {
-    System.out.println("tracking target");
+    System.out.println("Target Tracking Started");
     cam = new PhotonCamera("photoncam");
     isRunning = true;
     counter = 0;
@@ -105,6 +105,7 @@ public class VisionTurn extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
+    System.out.println("Target Tracking Finished");
     driveTrain.stop();
     isRunning = false;
   }

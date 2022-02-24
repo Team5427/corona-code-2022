@@ -45,7 +45,7 @@ public class VisionBall extends CommandBase {
     public void initialize() {
         locked = false;
         cam = new PhotonCamera("photoncam2");
-        System.out.println("tracking ball");
+        System.out.println("Ball Tracking Started");
     }
 
     @Override
@@ -91,6 +91,7 @@ public class VisionBall extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("Ball Track Finished");
         driveTrain.stop();
     }
     

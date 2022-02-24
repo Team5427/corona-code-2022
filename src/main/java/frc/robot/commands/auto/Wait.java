@@ -17,6 +17,7 @@ public class Wait extends CommandBase
     @Override
     public void initialize()
     {
+        System.out.print("Starting Wait of: " + time + "s");
         startTime = Timer.getFPGATimestamp();
     }
 
@@ -35,6 +36,7 @@ public class Wait extends CommandBase
     @Override
     public void end(boolean interrupted)
     {
+        System.out.println("Wait Finished");
         startTime = Timer.getFPGATimestamp();
         time = 0;
     }

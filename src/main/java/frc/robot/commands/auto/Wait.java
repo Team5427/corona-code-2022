@@ -17,7 +17,7 @@ public class Wait extends CommandBase
     @Override
     public void initialize()
     {
-        System.out.print("Starting Wait of: " + time + "s");
+        System.out.println("Starting Wait of: " + time + "s");
         startTime = Timer.getFPGATimestamp();
     }
 

@@ -28,7 +28,6 @@ public class PointTurn extends CommandBase{
     public void initialize()
     {
 
-        System.out.println("Turn Started");
         RobotContainer.getAHRS().reset();
         reset = true;
         if (isAuto) {
@@ -36,6 +35,7 @@ public class PointTurn extends CommandBase{
         } else if (!isAuto) {
             setPoint = Robot.turn_rbt_deg;
         }
+        System.out.println("Turn Started");
     }
   
     @Override
@@ -55,6 +55,8 @@ public class PointTurn extends CommandBase{
             speed *= -1;
         }
 
+
+
         RobotContainer.getDriveTrain().getRight().set(speed);
 
         RobotContainer.getDriveTrain().getLeft().set(-speed);
@@ -68,7 +70,6 @@ public class PointTurn extends CommandBase{
     public void end(boolean interrupted)
     {
         System.out.println("Turn Finished");
-        RobotContainer.getAHRS().reset();
         driveTrain.stop();
     }
   
@@ -77,7 +78,7 @@ public class PointTurn extends CommandBase{
     public boolean isFinished()
     {
         double angle = Math.abs((RobotContainer.getAHRS().getAngle() < 0)? 360 - Math.abs(RobotContainer.getAHRS().getAngle() % 360): Math.abs(RobotContainer.getAHRS().getAngle() % 360));
-        if(reset && ((setPoint > 180) && angle <= setPoint && angle != 0) || ((setPoint < 180) && angle >= setPoint)){
+        if(reset && (((setPoint > 180) && angle <= setPoint && angle != 0) || ((setPoint < 180) && angle >= setPoint)) && Math.abs(setPoint - angle) < 5){
             reset = false;
             return true;
         }

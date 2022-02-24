@@ -33,7 +33,7 @@ import frc.robot.commands.MoveTransport;
 import frc.robot.commands.MoveTilt;
 import frc.robot.commands.MoveTiltAuto;
 import frc.robot.commands.auto.ForwardTimer;
-import frc.robot.commands.auto.RapidReactAuton;
+import frc.robot.commands.auto.AutonThreeBallsBeta;
 import frc.robot.commands.auto.TurnDegreesBetter;
 import frc.robot.commands.auto.PointTurn;
 import frc.robot.commands.auto.VisionBall;
@@ -227,7 +227,7 @@ public class RobotContainer
     tiltAuto.whenPressed(new MoveTiltAuto(Constants.TILT_SPEED));
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
-    visionbtn.whenPressed(new RapidReactAuton());
+    visionbtn.whenPressed(new AutonThreeBallsBeta());
     visionbtn2.whenPressed(new VisionBall(0, 0.3, 0.4));
 
   }
@@ -240,7 +240,7 @@ public class RobotContainer
   public static Command getAutonomousCommand() 
   {
     // return new RapidReactNoVision();
-    return null;
+    return new AutonThreeBallsBeta();
   }
 
   public static DriveTrain getDriveTrain(){return driveTrain;}

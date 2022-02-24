@@ -83,7 +83,7 @@ public class VisionBall extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (pitch <= -9 && (err >= -3 || err <= 3) ) {
+        if (pitch <= 0 && (err >= -3 || err <= 3) ) {
             return true;
         }
         return false;

@@ -62,11 +62,11 @@ public class VisionTurn extends CommandBase
     }
 
     if(!hasTarget && isCW){
-      driveTrain.getRight().set(0.4);
-      driveTrain.getLeft().set(-0.4);     
+      driveTrain.getRight().set(0.5);
+      driveTrain.getLeft().set(-0.5);     
     } else if (!hasTarget && !isCW) {
-      driveTrain.getRight().set(-0.4);
-      driveTrain.getLeft().set(0.4);    
+      driveTrain.getRight().set(-0.5);
+      driveTrain.getLeft().set(0.5);    
     } else {
       if(err >= 20){
         driveTrain.getRight().set(0.25);

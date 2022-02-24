@@ -5,7 +5,7 @@ import frc.robot.commands.auto.VisionTurn;
 
 public class AutonTwoBalls extends SequentialCommandGroup{
     public AutonTwoBalls(){
-        addCommands(new VisionBall(0, 0.4, 0.5), new VisionTurn(0, true), new Wait(1));
+        addCommands(new VisionBall(0, 0.4, 0.5), new VisionTurn(0, true), new Wait(0.4), new ForwardTimer(0.3, -0.4), new VisionTurn(0, true), new Wait(1));
     
     }
 }

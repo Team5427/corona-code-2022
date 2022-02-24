@@ -33,7 +33,9 @@ import frc.robot.commands.MoveTransport;
 import frc.robot.commands.MoveTilt;
 import frc.robot.commands.MoveTiltAuto;
 import frc.robot.commands.auto.ForwardTimer;
+import frc.robot.commands.auto.AutonThreeBallsAlpha;
 import frc.robot.commands.auto.AutonThreeBallsBeta;
+import frc.robot.commands.auto.AutonTwoBalls;
 import frc.robot.commands.auto.TurnDegreesBetter;
 import frc.robot.commands.auto.PointTurn;
 import frc.robot.commands.auto.VisionBall;
@@ -227,7 +229,8 @@ public class RobotContainer
     tiltAuto.whenPressed(new MoveTiltAuto(Constants.TILT_SPEED));
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
-    visionbtn.whenPressed(new AutonThreeBallsBeta());
+    visionbtn.whenPressed(new AutonTwoBalls());
+
     visionbtn2.whenPressed(new VisionBall(0, 0.3, 0.4));
 
   }

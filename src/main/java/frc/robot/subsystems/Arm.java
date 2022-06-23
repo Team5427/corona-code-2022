@@ -16,22 +16,21 @@ public class Arm extends SubsystemBase{
         arm_motor = new WPI_VictorSPX(arm_motor_port);
         arm_motor.setInverted(true);
         arm_enc = new Encoder(enc_port_a, enc_port_b);
-        arm_enc.setReverseDirection(true);
         //0.00062938
-        shooter_btm_pid = new PIDController(0.00005, 0, 0);
+        shooter_btm_pid = new PIDController(0.000025, 0.0000001005, 0.00000000);
         arm_enc.setDistancePerPulse(1);
 
     }
 
     public void moveArm(double speed){
-        arm_motor.set(shooter_btm_pid.calculate(arm_enc.getRate(), 4000));
+        arm_motor.set(shooter_btm_pid.calculate(arm_enc.getRate(), 20000));
         // arm_motor.set(.25);
     }
 
     public double getShooterCalculate(){
-        return shooter_btm_pid.calculate(arm_enc.getRate(), 4000);
+        return shooter_btm_pid.calculate(arm_enc.getRate(), 20000);
     }
-
+z
     public Encoder getEnc(){
         return arm_enc;
     }

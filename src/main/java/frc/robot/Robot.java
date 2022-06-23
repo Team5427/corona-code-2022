@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
 
-    SmartDashboard.putNumber("Shooter RPM", RobotContainer.getArm().getEnc().getRate());
+    SmartDashboard.putNumber("Shooter RPM Error", RobotContainer.getArm().getEnc().getRate() - 20000);
     SmartDashboard.putNumber("freg", RobotContainer.getArm().getShooterCalculate());
     
     CommandScheduler.getInstance().run();
